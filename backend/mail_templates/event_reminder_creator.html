@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  {% include 'partials/_head.html' %}
+  <title>Asistentes</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f8f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f8f9;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;background:#ffffff;">
+        {% include 'partials/_brand.html' %}
+        {% set meta_label = 'Eventos · Creador' %}
+        {% set title = 'Faltan ' ~ days_left ~ ' días · ' ~ attendees_total ~ ' asistentes' %}
+        {% include 'partials/_hero.html' %}
+        {% include 'partials/_event_cover.html' %}
+        <tr>
+          <td style="padding:28px;font-size:15px;line-height:1.55;color:#0f172a;">
+            <p style="margin:0 0 14px;font-weight:700;">Hola {{ creator_name }},</p>
+            <p style="margin:0 0 14px;">Tu evento <strong>{{ event_title }}</strong> es en <strong>{{ days_left }} días</strong>. Personas apuntadas hasta ahora: <strong>{{ attendees_total }}</strong>.</p>
+            <table width="100%" style="border-collapse:collapse;font-size:14px;margin:12px 0;background:#f8fafc;border-radius:12px;">
+              <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b;">Inicio</th>
+                  <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">{{ starts_at }}</td></tr>
+              <tr><th style="text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;color:#64748b;">Lugar</th>
+                  <td style="padding:10px 12px;">{{ location }}</td></tr>
+            </table>
+            <p style="margin:16px 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;color:#64748b;">Usuarios apuntados (lista)</p>
+            <ol style="margin:0;padding-left:20px;font-size:14px;">
+              {% for u in attendee_usernames %}
+              <li style="margin-bottom:6px;"><strong>{{ u }}</strong></li>
+              {% endfor %}
+            </ol>
+            <a href="{{ app_public_url }}/studio" style="display:inline-block;margin-top:18px;padding:12px 22px;border-radius:999px;background:#1db954;color:#0a0a0a;font-weight:700;text-decoration:none;">Gestionar en Studio</a>
+          </td>
+        </tr>
+        {% include 'partials/_footer.html' %}
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-accent: #1db954;
+  --color-boton-primario: #1db954;
+  --color-card-bg: #f6f8f9;
+  
+  /* TAMAÑOS */
+  --sidebar-width: 260px;
+    --sidebar-bg: #1f1f1f;
+    --sidebar-hover: #2a2a2a;
+    --sidebar-active: #2f2f2f;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+
+}
+
+/* DARK */
+[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-text: #ffffff;
+  --color-accent: #1db954;
+  --color-boton-primario: #1db954;
+  --color-card-bg: #071022;
+}
+
+/* LIGHT (opcional, pero limpio) */
+[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --color-accent: #1db954;
+  --color-boton-primario: #1db954;
+  --color-card-bg: #f6f8f9;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background .18s ease, color .18s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,97 @@
+.artist-public {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding-bottom: 120px;
+}
+
+.artist-public__hero {
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  padding: 34px 36px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 40%, transparent), transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+
+.artist-public__avatar {
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid color-mix(in srgb, var(--color-text) 20%, transparent);
+}
+
+.artist-public__label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.artist-public__title {
+  margin: 0;
+  font-size: 44px;
+  letter-spacing: -0.5px;
+}
+
+.artist-public__meta {
+  margin: 8px 0 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.artist-public__actions {
+  margin-top: 16px;
+}
+
+.artist-public__subscribe {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--color-accent);
+  color: #101010;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.artist-public__subscribe:hover:not(:disabled) {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.artist-public__subscribe:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.artist-public__subscribe--active {
+  background: transparent;
+  color: var(--color-text);
+  border: 2px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+}
+
+.artist-public__main {
+  padding: 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+@media (max-width: 768px) {
+  .artist-public__hero {
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 18px;
+  }
+
+  .artist-public__title {
+    font-size: 32px;
+  }
+
+  .artist-public__main {
+    padding: 20px 16px;
+  }
+}

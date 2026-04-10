@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  {% include 'partials/_head.html' %}
+  <title>Evento</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f8f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f8f9;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;background:#ffffff;">
+        {% include 'partials/_brand.html' %}
+        {% set meta_label = 'Eventos' %}
+        {% set title = 'Te has apuntado al evento' %}
+        {% include 'partials/_hero.html' %}
+        {% include 'partials/_event_cover.html' %}
+        <tr>
+          <td style="padding:28px;font-size:15px;line-height:1.55;color:#0f172a;">
+            <p style="margin:0 0 14px;font-weight:700;">Hola {{ username }},</p>
+            <p style="margin:0 0 14px;">Tu asistencia a <strong>{{ event_title }}</strong> queda confirmada.</p>
+            <table width="100%" style="border-collapse:collapse;font-size:14px;margin:16px 0;background:#f8fafc;border-radius:12px;">
+              <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b;">Organiza</th>
+                  <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">{{ artist_name }}</td></tr>
+              <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b;">Inicio</th>
+                  <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">{{ starts_at }}</td></tr>
+              <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b;">Fin</th>
+                  <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">{{ ends_at }}</td></tr>
+              <tr><th style="text-align:left;padding:10px 12px;border-bottom:1px solid #e2e8f0;font-size:11px;text-transform:uppercase;color:#64748b;">Lugar</th>
+                  <td style="padding:10px 12px;border-bottom:1px solid #e2e8f0;">{{ location }}</td></tr>
+              <tr><th style="text-align:left;padding:10px 12px;font-size:11px;text-transform:uppercase;color:#64748b;">Asistentes</th>
+                  <td style="padding:10px 12px;">{{ attendees_so_far }}</td></tr>
+            </table>
+            <p style="margin:0;font-size:14px;color:#64748b;">Apuntado el {{ rsvp_at }}.</p>
+            <a href="{{ app_public_url }}/" style="display:inline-block;margin-top:18px;padding:12px 22px;border-radius:999px;background:#1db954;color:#0a0a0a;font-weight:700;text-decoration:none;">Ver en la app</a>
+          </td>
+        </tr>
+        {% include 'partials/_footer.html' %}
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

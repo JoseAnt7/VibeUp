@@ -1,0 +1,306 @@
+.Contendor_Principal_Navbar {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    background: transparent;
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 100;
+}
+
+.Navegacion {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: var(--color-text);
+}
+
+.Navegacion svg {
+    color: var(--color-accent);
+    font-size: 20px;
+}
+
+.Navegacion input {
+    width: 360px;
+    max-width: 45vw;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.08);
+    outline: none;
+    background: rgba(255,255,255,0.04);
+    color: var(--color-text);
+    transition: box-shadow .18s ease, transform .12s ease;
+}
+.Navegacion input:focus {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transform: translateY(-1px);
+}
+
+.Navegacion__search {
+    position: relative;
+}
+
+.Navegacion__results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 360px;
+    max-width: 45vw;
+    max-height: 360px;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 92%, var(--color-text) 8%);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+    z-index: 1200;
+    backdrop-filter: blur(6px);
+}
+
+.Navegacion__result-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    background: transparent;
+    padding: 10px 12px;
+    cursor: pointer;
+    color: var(--color-text);
+    text-align: left;
+}
+
+.Navegacion__result-item:hover {
+    background: color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+
+.Navegacion__result-image {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.Navegacion__result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.Navegacion__result-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Navegacion__result-subtitle {
+    font-size: 12px;
+    color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+
+.Navegacion__result-more,
+.Navegacion__result-empty {
+    padding: 11px 12px;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--color-text) 78%, transparent);
+}
+
+.Navegacion__result-more {
+    width: 100%;
+    border: none;
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.Botones_Sesion {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.Botones_Sesion svg {
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.Botones_Sesion button {
+    padding: 8px 16px;
+    background-color: var(--color-boton-primario);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.Botones_Sesion button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.Botones_Sesion button.secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--color-text);
+}
+
+/* ======================== */
+/* User Menu Dropdown Styles */
+/* ======================== */
+
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-menu__trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: color-mix(in srgb, var(--color-bg) 92%, var(--color-text) 8%);
+    border: 1px solid color-mix(in srgb, var(--color-text) 24%, transparent);
+    border-radius: 20px;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.user-menu__trigger:hover {
+    background: color-mix(in srgb, var(--color-bg) 84%, var(--color-text) 16%);
+    border-color: color-mix(in srgb, var(--color-text) 36%, transparent);
+}
+
+.user-menu__icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.user-menu--open .user-menu__icon {
+    transform: rotate(180deg);
+}
+
+.user-menu__username {
+    font-weight: 500;
+}
+
+.user-menu__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: var(--color-surface);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    z-index: 1000;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-menu__item {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    font-weight: 400;
+}
+
+.user-menu__item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.user-menu__item--logout {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    color: #ef4444;
+}
+
+.user-menu__item--logout:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Studio / barra superior en viewport estrecho (no altera desktop ancho) */
+@media (max-width: 768px) {
+    .Contendor_Principal_Navbar {
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .Contendor_Principal_Navbar > img[alt="Logo"] {
+        width: 52px !important;
+        height: auto;
+    }
+
+    .Navegacion {
+        order: 3;
+        flex: 1 1 100%;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .Navegacion__search {
+        flex: 1;
+        min-width: 0;
+        position: relative;
+    }
+
+    .Navegacion input {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+    }
+
+    .Navegacion__results {
+        width: 100%;
+        max-width: none;
+        left: 0;
+        right: 0;
+    }
+
+    .Botones_Sesion {
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+    .user-menu__dropdown {
+        right: 0;
+        left: auto;
+        max-width: calc(100vw - 28px);
+    }
+}

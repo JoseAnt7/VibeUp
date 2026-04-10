@@ -1,0 +1,302 @@
+/* =========================== */
+/* Account Settings Page Styles */
+/* =========================== */
+
+.account-settings {
+    min-height: 100vh;
+    background: var(--color-bg, #fff);
+    display: flex;
+    flex-direction: column;
+}
+
+.account-settings__container {
+    flex: 1;
+    padding: 40px 28px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.account-settings__loading {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--color-text);
+}
+
+.account-settings__loading svg {
+    font-size: 40px;
+    color: var(--color-accent);
+}
+
+/* Header */
+.account-settings__header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.account-settings__header-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.account-settings__header-icon {
+    font-size: 32px;
+    color: var(--color-accent);
+    margin-top: 4px;
+}
+
+.account-settings__title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--color-text);
+}
+
+.account-settings__subtitle {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+}
+
+/* Feedback Messages */
+.account-settings__feedback {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.account-settings__feedback--success {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.account-settings__feedback--error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.account-settings__feedback-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* Form Sections */
+.account-settings__form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.account-settings__section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.account-settings__section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: var(--color-text);
+}
+
+.account-settings__section-desc {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* Form Groups */
+.account-settings__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.account-settings__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Labels */
+.account-settings__label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--color-text);
+    opacity: 0.8;
+}
+
+/* Input Fields */
+.account-settings__input {
+    padding: 12px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text);
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.account-settings__input:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.account-settings__input:focus {
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
+}
+
+.account-settings__input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.account-settings__input--error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.account-settings__input--error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Error Messages */
+.account-settings__error {
+    font-size: 12px;
+    color: #ef4444;
+    font-weight: 500;
+    animation: slideIn 0.2s ease-out;
+}
+
+/* Action Buttons */
+.account-settings__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.account-settings__btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    outline: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.account-settings__btn--primary {
+    background: var(--color-boton-primario);
+    color: white;
+    flex: 1;
+}
+
+.account-settings__btn--primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(29, 185, 84, 0.3);
+}
+
+.account-settings__btn--primary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.account-settings__btn--primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.account-settings__btn--secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    flex: 1;
+}
+
+.account-settings__btn--secondary:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+.account-settings__btn-icon--spin {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 640px) {
+    .account-settings__container {
+        padding: 20px 16px;
+    }
+
+    .account-settings__title {
+        font-size: 22px;
+    }
+
+    .account-settings__section {
+        padding: 16px;
+    }
+
+    .account-settings__form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .account-settings__actions {
+        flex-direction: column;
+    }
+
+    .account-settings__header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}

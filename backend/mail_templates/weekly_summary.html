@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  {% include 'partials/_head.html' %}
+  <title>Resumen semanal</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f8f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f8f9;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;border-radius:16px;overflow:hidden;border:1px solid #e2e8f0;background:#ffffff;">
+        {% include 'partials/_brand.html' %}
+        {% set meta_label = 'Estadísticas' %}
+        {% set title = 'Tu resumen semanal' %}
+        {% include 'partials/_hero.html' %}
+        <tr>
+          <td style="padding:28px;font-size:15px;line-height:1.55;color:#0f172a;">
+            <p style="margin:0 0 14px;">Resumen de <strong>{{ channel_name }}</strong> — <strong>{{ week_label }}</strong>.</p>
+            <table width="100%" style="border-collapse:separate;border-spacing:10px;margin:12px 0;">
+              <tr>
+                <td style="padding:14px;text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;width:33%;">
+                  <span style="font-size:22px;font-weight:800;color:#1db954;">{{ plays }}</span>
+                  <div style="font-size:12px;color:#64748b;margin-top:4px;">Reproducciones</div>
+                </td>
+                <td style="padding:14px;text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;width:33%;">
+                  <span style="font-size:22px;font-weight:800;color:#1db954;">{{ likes }}</span>
+                  <div style="font-size:12px;color:#64748b;margin-top:4px;">Likes</div>
+                </td>
+                <td style="padding:14px;text-align:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;width:33%;">
+                  <span style="font-size:22px;font-weight:800;color:#1db954;">{{ new_subscribers }}</span>
+                  <div style="font-size:12px;color:#64748b;margin-top:4px;">Nuevos suscriptores</div>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:18px 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;color:#64748b;">Canciones más escuchadas</p>
+            <table width="100%" style="border-collapse:collapse;font-size:14px;">
+              <thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid #e2e8f0;">Título</th><th style="text-align:right;padding:8px;border-bottom:1px solid #e2e8f0;">Reprods.</th><th style="text-align:right;padding:8px;border-bottom:1px solid #e2e8f0;">Likes</th></tr></thead>
+              <tbody>
+                {% for s in top_songs %}
+                <tr><td style="padding:8px;border-bottom:1px solid #f1f5f9;">{{ s.title }}</td><td style="text-align:right;padding:8px;border-bottom:1px solid #f1f5f9;">{{ s.plays }}</td><td style="text-align:right;padding:8px;border-bottom:1px solid #f1f5f9;">{{ s.likes }}</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <p style="margin:18px 0 8px;font-size:13px;font-weight:700;text-transform:uppercase;color:#64748b;">Álbumes más escuchados</p>
+            <table width="100%" style="border-collapse:collapse;font-size:14px;">
+              <thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid #e2e8f0;">Álbum</th><th style="text-align:right;padding:8px;border-bottom:1px solid #e2e8f0;">Reprods.</th></tr></thead>
+              <tbody>
+                {% for a in top_albums %}
+                <tr><td style="padding:8px;border-bottom:1px solid #f1f5f9;">{{ a.title }}</td><td style="text-align:right;padding:8px;border-bottom:1px solid #f1f5f9;">{{ a.plays }}</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <a href="{{ app_public_url }}/studio" style="display:inline-block;margin-top:18px;padding:12px 22px;border-radius:999px;background:#1db954;color:#0a0a0a;font-weight:700;text-decoration:none;">Abrir Studio</a>
+          </td>
+        </tr>
+        {% include 'partials/_footer.html' %}
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
