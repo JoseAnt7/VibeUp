@@ -2,6 +2,7 @@
   min-height: 100vh;
   background: var(--color-bg);
   color: var(--color-text);
+  overflow-x: hidden;
 }
 
 .search-results-page__main {
@@ -9,6 +10,8 @@
   grid-template-columns: 300px 1fr;
   gap: 24px;
   padding: 22px 28px 120px;
+  width: 100%;
+  min-width: 0;
 }
 
 .search-results__sidebar {
@@ -62,11 +65,13 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .search-results__header h1 {
   margin: 0;
   font-size: 30px;
+  overflow-wrap: anywhere;
 }
 
 .search-results__header p {
@@ -78,6 +83,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
 }
 
 .search-results__section-head {
@@ -109,10 +115,16 @@
 .search-results__row {
   display: flex;
   gap: 14px;
-  overflow: hidden;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .search-results__card {
+  flex: 0 0 auto;
   min-width: 180px;
   max-width: 180px;
   border-radius: 12px;
@@ -189,9 +201,60 @@
 @media (max-width: 900px) {
   .search-results-page__main {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 16px 120px;
   }
 
   .search-results__sidebar {
     position: static;
+    min-width: 0;
+  }
+
+  .search-results__header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 700px) {
+  .search-results__section-head {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .search-results__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+
+  .search-results__card,
+  .search-results__card--event {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .search-results__card-image {
+    height: 150px;
+  }
+
+  .search-results__card-image--event {
+    height: 92px;
+  }
+}
+
+@media (max-width: 460px) {
+  .search-results-page__main {
+    padding: 12px 12px 120px;
+  }
+
+  .search-results__row {
+    grid-template-columns: 1fr;
+  }
+
+  .search-results__header h1 {
+    font-size: 21px;
   }
 }

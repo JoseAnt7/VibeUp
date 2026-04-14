@@ -38,10 +38,17 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
 
     useEffect(() => {
         if (!isOpen) return;
-        if (!isEdit) return;
-        setTitle(album.title || '');
-        setPreview(album.img || null);
-        const existing = (album.songs || []).map((s) => s.id);
+        if (!isEdit) {
+            setTitle('');
+            setPreview(null);
+            setSelectedSongs([]);
+            setImage(null);
+            setMessage('');
+            return;
+        }
+        setTitle(album?.title || '');
+        setPreview(album?.img || null);
+        const existing = (album?.songs || []).map((s) => Number(s.id)).filter((id) => Number.isFinite(id));
         setSelectedSongs(existing);
         setImage(null);
         setMessage('');

@@ -1,10 +1,10 @@
 import logging
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, verify_jwt_in_request
 from extensions import db
 from models import Artist, User
-from models import Song, Album, SongLike, SongPlay, Subscription, SongListenEvent, Event, EventAttendee
+from models import Song, Album, SongLike, SongPlay, Subscription, SongListenEvent, Event, EventAttendee, UserSongLike, UserSongPlay
 from datetime import datetime, timedelta
 from sqlalchemy import text, func
 from functools import wraps
@@ -554,12 +554,22 @@ def like_public_song(song_id):
     if not song:
         return jsonify({'msg': 'Canción no encontrada'}), 404
 
-    ip_address = get_client_ip()
-    already_liked = SongLike.query.filter_by(song_id=song.id, ip_address=ip_address).first()
-    if already_liked:
-        return jsonify({'liked': False, 'likes': song.likes, 'msg': 'Ya diste like desde esta IP'}), 200
+    verify_jwt_in_request(optional=True)
+    user_id = get_jwt_identity()
 
-    db.session.add(SongLike(song_id=song.id, ip_address=ip_address))
+    if user_id is not None:
+        user_id = int(user_id)
+        already_liked = UserSongLike.query.filter_by(song_id=song.id, user_id=user_id).first()
+        if already_liked:
+            return jsonify({'liked': False, 'likes': song.likes, 'msg': 'Ya diste like con tu usuario'}), 200
+        db.session.add(UserSongLike(song_id=song.id, user_id=user_id))
+    else:
+        ip_address = get_client_ip()
+        already_liked = SongLike.query.filter_by(song_id=song.id, ip_address=ip_address).first()
+        if already_liked:
+            return jsonify({'liked': False, 'likes': song.likes, 'msg': 'Ya diste like desde esta IP'}), 200
+        db.session.add(SongLike(song_id=song.id, ip_address=ip_address))
+
     song.likes = (song.likes or 0) + 1
     db.session.commit()
     return jsonify({'liked': True, 'likes': song.likes}), 200
@@ -570,12 +580,22 @@ def register_public_song_play(song_id):
     if not song:
         return jsonify({'msg': 'Canción no encontrada'}), 404
 
-    ip_address = get_client_ip()
-    existing_play = SongPlay.query.filter_by(song_id=song.id, ip_address=ip_address).first()
-    if existing_play:
-        return jsonify({'counted': False, 'plays': song.plays}), 200
+    verify_jwt_in_request(optional=True)
+    user_id = get_jwt_identity()
 
-    db.session.add(SongPlay(song_id=song.id, ip_address=ip_address))
+    if user_id is not None:
+        user_id = int(user_id)
+        existing_play = UserSongPlay.query.filter_by(song_id=song.id, user_id=user_id).first()
+        if existing_play:
+            return jsonify({'counted': False, 'plays': song.plays}), 200
+        db.session.add(UserSongPlay(song_id=song.id, user_id=user_id))
+    else:
+        ip_address = get_client_ip()
+        existing_play = SongPlay.query.filter_by(song_id=song.id, ip_address=ip_address).first()
+        if existing_play:
+            return jsonify({'counted': False, 'plays': song.plays}), 200
+        db.session.add(SongPlay(song_id=song.id, ip_address=ip_address))
+
     song.plays = (song.plays or 0) + 1
     db.session.commit()
     return jsonify({'counted': True, 'plays': song.plays}), 200
@@ -631,7 +651,7 @@ def my_analytics():
     avg_listen = [0] * days
     total_listen_seconds = 0.0
 
-    # Views (plays) per day (unique per IP enforced by song_plays)
+    # Views (plays) per day: visitantes por IP + usuarios por cuenta
     play_rows = db.session.execute(text("""
         SELECT strftime('%Y-%m-%d', sp.created_at) AS day, COUNT(*) AS c
         FROM song_plays sp
@@ -642,6 +662,17 @@ def my_analytics():
     for day, c in play_rows:
         if day in idx:
             views[idx[day]] = int(c or 0)
+
+    user_play_rows = db.session.execute(text("""
+        SELECT strftime('%Y-%m-%d', usp.created_at) AS day, COUNT(*) AS c
+        FROM user_song_plays usp
+        JOIN songs s ON s.id = usp.song_id
+        WHERE s.artist_id = :artist_id AND usp.created_at >= :start_dt
+        GROUP BY day
+    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchall()
+    for day, c in user_play_rows:
+        if day in idx:
+            views[idx[day]] += int(c or 0)
 
     # Subs per day
     sub_rows = db.session.execute(text("""
@@ -706,7 +737,7 @@ def my_analytics_week_summary():
     week_end_exclusive = week_start + timedelta(days=7)
     week_end_dt = datetime.combine(week_end_exclusive, datetime.min.time())
 
-    plays = (
+    plays_ip = (
         db.session.query(func.count(SongPlay.id))
         .join(Song, SongPlay.song_id == Song.id)
         .filter(
@@ -716,7 +747,20 @@ def my_analytics_week_summary():
         )
         .scalar()
     )
-    plays = int(plays or 0)
+    plays_ip = int(plays_ip or 0)
+
+    plays_user = (
+        db.session.query(func.count(UserSongPlay.id))
+        .join(Song, UserSongPlay.song_id == Song.id)
+        .filter(
+            Song.artist_id == artist.id,
+            UserSongPlay.created_at >= week_start_dt,
+            UserSongPlay.created_at < week_end_dt,
+        )
+        .scalar()
+    )
+    plays_user = int(plays_user or 0)
+    plays = plays_ip + plays_user
 
     listen_count = (
         db.session.query(func.count(SongListenEvent.id))

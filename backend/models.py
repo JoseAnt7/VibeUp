@@ -137,7 +137,8 @@ class Album(db.Model):
             "id": self.id,
             "title": self.title,
             "img": self.img,
-            "artist_id": self.artist_id
+            "artist_id": self.artist_id,
+            "songs": [s.to_dict() for s in self.songs]
         }
 
 
@@ -177,6 +178,19 @@ class SongLike(db.Model):
     )
 
 
+class UserSongLike(db.Model):
+    __tablename__ = 'user_song_likes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        db.UniqueConstraint('song_id', 'user_id', name='uq_user_song_like'),
+    )
+
+
 class SongPlay(db.Model):
     __tablename__ = 'song_plays'
 
@@ -187,6 +201,19 @@ class SongPlay(db.Model):
 
     __table_args__ = (
         db.UniqueConstraint('song_id', 'ip_address', name='uq_song_play_ip'),
+    )
+
+
+class UserSongPlay(db.Model):
+    __tablename__ = 'user_song_plays'
+
+    id = db.Column(db.Integer, primary_key=True)
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.id'), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    __table_args__ = (
+        db.UniqueConstraint('song_id', 'user_id', name='uq_user_song_play'),
     )
 
 

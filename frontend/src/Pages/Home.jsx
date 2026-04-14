@@ -121,7 +121,9 @@ export const Home = () => {
 
     const handleLikeSong = async (song) => {
         try {
-            const res = await fetch(`${API_BASE}/api/public/songs/${song.id}/like`, { method: "POST" });
+            const token = localStorage.getItem("access_token");
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            const res = await fetch(`${API_BASE}/api/public/songs/${song.id}/like`, { method: "POST", headers });
             const data = await res.json();
             if (data.liked) {
                 setSongs((prev) => prev.map((s) => s.id === song.id ? { ...s, likes: data.likes } : s));
