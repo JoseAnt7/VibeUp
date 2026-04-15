@@ -1,4 +1,4 @@
-﻿# Despliegue en VPS (Hostinger) - React + Flask + MySQL con Docker
+# Despliegue en VPS (Hostinger) - React + Flask + MySQL con Docker
 
 Este proyecto queda preparado con:
 
@@ -18,6 +18,7 @@ Este proyecto queda preparado con:
 ```bash
 git clone <tu-repo>
 cd Agentes
+cp .env.example .env
 cp backend/.env.example backend/.env
 ```
 
@@ -30,12 +31,15 @@ Edita `backend/.env` y define al menos:
 
 ### Credenciales MySQL
 
-En `docker-compose.yml` hay valores por defecto para MySQL. Cambialos antes de produccion:
+En el archivo `.env` (raiz del proyecto) estan las variables que usa `docker-compose.yml`.
+Cambialas antes de produccion:
 
+- `MYSQL_DATABASE`
+- `MYSQL_USER`
 - `MYSQL_PASSWORD`
 - `MYSQL_ROOT_PASSWORD`
 
-Y recuerda mantenerlos sincronizados con `DATABASE_URL` de `backend/.env`.
+Y recuerda mantenerlas sincronizadas con `DATABASE_URL` de `backend/.env`.
 
 ## 3) Levantar contenedores
 
