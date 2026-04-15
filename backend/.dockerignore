@@ -1,0 +1,13 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+instance/
+venv/
+.env
+client_secret.json
+credentials.json
+.git
+.gitignore
+migrations/__pycache__/
