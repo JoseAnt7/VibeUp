@@ -177,6 +177,7 @@ export const Home = () => {
                 onClose={closeEventModal}
                 onRsvpChange={(id, count) => handleEventRsvp(id, count)}
             />
+            <p>Estado de prueba</p>
         </div>
     )
 }
