@@ -78,8 +78,16 @@ Cada **push a `docker`** dispara el workflow:
 | `VPS_USER` | Usuario SSH (ej. `root` o `deploy`) |
 | `VPS_SSH_PRIVATE_KEY` | Contenido completo de la clave **privada** (la que corresponde a la pública en `~/.ssh/authorized_keys` del VPS) |
 | `VPS_DEPLOY_PATH` | Ruta absoluta al repo en el servidor (ej. `/home/deploy/vibeup`) |
+| `VPS_SSH_KEY_PASSPHRASE` | (Opcional) Si tu clave privada `id_ed25519` tiene **frase de paso**, ponla aquí. Si la clave no tiene contraseña, no crees este secreto. |
 
 La clave privada no debe subirse al repo: solo va en **Secrets** de GitHub.
+
+### Si el deploy falla con `ssh.ParsePrivateKey: ssh: no key found`
+
+1. **Nombre del secreto**: debe ser exactamente `VPS_SSH_PRIVATE_KEY` (repositorio o entorno, no confundir con “Environment” si no lo usas).
+2. **Contenido**: debe ser el archivo **privado** `id_ed25519` (no `id_ed25519.pub`). Copia desde la primera línea `-----BEGIN` hasta la última `-----END`, sin comillas antes ni después.
+3. **Frase de paso**: si al crear la clave pusiste contraseña, añade el secreto `VPS_SSH_KEY_PASSPHRASE` o genera una clave **sin** passphrase solo para CI y añade su `.pub` al VPS.
+4. **Evita BOM / caracteres raros**: al pegar en GitHub, mejor copiar desde VS Code o con `Get-Content` en PowerShell y revisar que no haya líneas vacías al inicio.
 
 ### Docker Hub
 
