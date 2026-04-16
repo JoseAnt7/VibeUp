@@ -1,4 +1,4 @@
-﻿// components/studio/StatsCard.jsx
+// components/studio/StatsCard.jsx
 import React, { useEffect, useState } from "react";
 import { Card } from "./Card";
 import { API_BASE } from "../../utils/apiBase";
@@ -27,7 +27,7 @@ export const StatsCard = ({ onGoToStats }) => {
     return (
         <Card>
             <div className="stats">
-                <h3 className="stats__title">EstadÃ­sticas del canal</h3>
+                <h3 className="stats__title">Estadísticas del canal</h3>
 
                 <div className="stats__section">
                     <p className="stats__label">Suscriptores actuales</p>
@@ -38,7 +38,7 @@ export const StatsCard = ({ onGoToStats }) => {
 
                 <div className="stats__section">
                     <p className="stats__label">Resumen</p>
-                    <p className="stats__sub">Ãšltimos 28 dÃ­as</p>
+                    <p className="stats__sub">ltimos 28 días</p>
 
                     <div className="stats__row">
                         <span>Visualizaciones</span>
@@ -46,7 +46,7 @@ export const StatsCard = ({ onGoToStats }) => {
                     </div>
 
                     <div className="stats__row">
-                        <span>Tiempo de visualizaciÃ³n (horas)</span>
+                        <span>Tiempo de visualización (horas)</span>
                         <span>0.0</span>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ export const StatsCard = ({ onGoToStats }) => {
                     className="stats__button"
                     onClick={() => onGoToStats?.("views")}
                 >
-                    Ir a las estadÃ­sticas del canal
+                    Ir a las estadísticas del canal
                 </button>
             </div>
         </Card>

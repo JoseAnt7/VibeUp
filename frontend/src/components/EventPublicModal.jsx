@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "../assets/css/Events.css";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ function formatRange(startsAt, endsAt) {
     const startStr = a.toLocaleString("es-ES", opt);
     if (!b || Number.isNaN(b.getTime())) return startStr;
     const endStr = b.toLocaleString("es-ES", opt);
-    return `${startStr} â€” ${endStr}`;
+    return `${startStr}  ${endStr}`;
 }
 
 export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => {
@@ -93,7 +93,7 @@ export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => 
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 {loading ? (
-                    <p className="event-modal__loading">Cargandoâ€¦</p>
+                    <p className="event-modal__loading">Cargando</p>
                 ) : error ? (
                     <p className="event-modal__error">{error}</p>
                 ) : event ? (
@@ -114,7 +114,7 @@ export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => 
                             <p className="event-modal__place">
                                 <FontAwesomeIcon icon={faMapMarkerAlt} /> {event.location}
                             </p>
-                            <p className="event-modal__desc">{event.description || "Sin descripciÃ³n."}</p>
+                            <p className="event-modal__desc">{event.description || "Sin descripción."}</p>
                             <div className="event-modal__stats">
                                 <FontAwesomeIcon icon={faUserFriends} />
                                 <span>
@@ -134,7 +134,7 @@ export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => 
                             ) : (
                                 <p className="event-modal__hint">
                                     <button type="button" className="event-modal__link" onClick={() => navigate("/session")}>
-                                        Inicia sesiÃ³n
+                                        Inicia sesión
                                     </button>{" "}
                                     para apuntarte a este evento.
                                 </p>

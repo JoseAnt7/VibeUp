@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadMusicModal } from "./UploadMusicModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
 import { API_BASE } from "../../utils/apiBase";
@@ -28,13 +28,13 @@ export const RecentSongCard = () => {
             const data = await response.json();
 
             if (data.songs && data.songs.length > 0) {
-                // Obtener la Ãºltima canciÃ³n (la mÃ¡s reciente)
+                // Obtener la última canción (la más reciente)
                 const lastSong = data.songs[data.songs.length - 1];
                 setRecentSong(lastSong);
                 setError(null);
             }
         } catch (err) {
-            setError("Error al cargar la canciÃ³n reciente");
+            setError("Error al cargar la canción reciente");
             console.error(err);
         } finally {
             setLoading(false);
@@ -76,7 +76,7 @@ export const RecentSongCard = () => {
 
                 {/* HEADER */}
                 <div className="recent-song-card__header">
-                    <h3 className="recent-song-card__title">Ãšltima canciÃ³n subida</h3>
+                    <h3 className="recent-song-card__title">ltima canción subida</h3>
                     <span className="recent-song-card__badge">Publicado</span>
                 </div>
 
@@ -93,12 +93,12 @@ export const RecentSongCard = () => {
                             />
                         ) : (
                             <div className="recent-song-card__image-placeholder">
-                                ðŸŽµ
+                                
                             </div>
                         )}
                     </div>
 
-                    {/* RIGHT - INFORMACIÃ“N */}
+                    {/* RIGHT - INFORMACIN */}
                     <div className="recent-song-card__info">
 
                         <div className="recent-song-card__content">
@@ -108,7 +108,7 @@ export const RecentSongCard = () => {
 
                             <div className="recent-song-card__stats">
                                 <div className="recent-song-card__stat">
-                                    <span className="recent-song-card__stat-label">DuraciÃ³n</span>
+                                    <span className="recent-song-card__stat-label">Duración</span>
                                     <span className="recent-song-card__stat-value">
                                         {formatDuration(recentSong.duration)}
                                     </span>

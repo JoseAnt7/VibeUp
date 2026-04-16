@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -38,7 +38,7 @@ export const Home = () => {
                     data.albums.map(a => ({
                         ...a,
                         title: a.title,
-                        subtitle: a.artist_name || 'Ãlbum',
+                        subtitle: a.artist_name || 'Álbum',
                         img: a.img || Logo
                     }))
                 );

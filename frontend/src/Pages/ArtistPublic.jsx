@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
 import { SectionGrid } from "../components/SectionGrid";
@@ -180,7 +180,7 @@ export const ArtistPublic = () => {
                     <p className="artist-public__label">Canal de artista</p>
                     <h1 className="artist-public__title">{artist?.name || "Artista"}</h1>
                     <p className="artist-public__meta">
-                        {subscriberCount} {subscriberCount === 1 ? "suscriptor" : "suscriptores"} Â· {songs.length} canciones Â· {albums.length} albumes
+                        {subscriberCount} {subscriberCount === 1 ? "suscriptor" : "suscriptores"} · {songs.length} canciones · {albums.length} albumes
                     </p>
                     {showSubscribeControl ? (
                         <div className="artist-public__actions">
@@ -190,7 +190,7 @@ export const ArtistPublic = () => {
                                 onClick={toggleSubscription}
                                 disabled={subLoading}
                             >
-                                {subscribed ? "Anular suscripciÃ³n" : "Suscribirse"}
+                                {subscribed ? "Anular suscripción" : "Suscribirse"}
                             </button>
                         </div>
                     ) : null}

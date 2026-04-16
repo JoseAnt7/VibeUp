@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/AuthForms.css";
 import { API_BASE } from "../utils/apiBase";
@@ -50,7 +50,7 @@ export const Forms = () => {
             });
             const data = await res.json();
             if (!res.ok) {
-                setMessage(data.msg || 'Error al iniciar sesiÃ³n');
+                setMessage(data.msg || 'Error al iniciar sesión');
                 setMessageType("error");
                 setIsLoading(false);
                 return;
@@ -58,11 +58,11 @@ export const Forms = () => {
             // store token and user
             localStorage.setItem('access_token', data.access_token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            setMessage('Â¡Bienvenido! Redirigiendo...');
+            setMessage('¡Bienvenido! Redirigiendo...');
             setMessageType("success");
             setTimeout(() => navigate('/'), 1500);
         } catch (err) {
-            setMessage('Error de conexiÃ³n con el servidor');
+            setMessage('Error de conexión con el servidor');
             setMessageType("error");
             setIsLoading(false);
         }
@@ -83,21 +83,21 @@ export const Forms = () => {
         }
 
         if (!isValidEmail(registerEmail)) {
-            setMessage("Email invÃ¡lido");
+            setMessage("Email inválido");
             setMessageType("error");
             setIsLoading(false);
             return;
         }
 
         if (registerPassword.length < 6) {
-            setMessage("La contraseÃ±a debe tener al menos 6 caracteres");
+            setMessage("La contraseña debe tener al menos 6 caracteres");
             setMessageType("error");
             setIsLoading(false);
             return;
         }
 
         if (registerPassword !== registerConfirmPassword) {
-            setMessage("Las contraseÃ±as no coinciden");
+            setMessage("Las contraseñas no coinciden");
             setMessageType("error");
             setIsLoading(false);
             return;
@@ -121,10 +121,10 @@ export const Forms = () => {
                 return;
             }
             
-            setMessage('Â¡Registro exitoso! Iniciando sesiÃ³n...');
+            setMessage('¡Registro exitoso! Iniciando sesión...');
             setMessageType("success");
             
-            // Auto-login despuÃ©s del registro
+            // Auto-login después del registro
             setTimeout(() => {
                 setIsLogin(true);
                 setLoginIdentifier(registerEmail);
@@ -136,7 +136,7 @@ export const Forms = () => {
                 setMessage("");
             }, 1500);
         } catch (err) {
-            setMessage('Error de conexiÃ³n con el servidor');
+            setMessage('Error de conexión con el servidor');
             setMessageType("error");
             setIsLoading(false);
         }
@@ -154,7 +154,7 @@ export const Forms = () => {
 
                 {/* Contenedor del formulario */}
                 <div className="auth-wrapper">
-                    {/* Toggle de pestaÃ±as */}
+                    {/* Toggle de pestañas */}
                     <div className="auth-toggle">
                         <button
                             className={`auth-toggle__item ${isLogin ? 'auth-toggle__item--active' : ''}`}
@@ -163,7 +163,7 @@ export const Forms = () => {
                                 setMessage("");
                             }}
                         >
-                            <span className="auth-toggle__text">Iniciar SesiÃ³n</span>
+                            <span className="auth-toggle__text">Iniciar Sesión</span>
                         </button>
                         <button
                             className={`auth-toggle__item ${!isLogin ? 'auth-toggle__item--active' : ''}`}
@@ -181,7 +181,7 @@ export const Forms = () => {
                         <form onSubmit={handleLogin} className="auth-form auth-form--login">
                             <div className="auth-header">
                                 <h1 className="auth-header__title">Bienvenido</h1>
-                                <p className="auth-header__subtitle">Inicia sesiÃ³n para acceder a tu mÃºsica</p>
+                                <p className="auth-header__subtitle">Inicia sesión para acceder a tu música</p>
                             </div>
 
                             <div className="form-group">
@@ -193,30 +193,30 @@ export const Forms = () => {
                                         id="login-identifier"
                                         className="form-group__input"
                                         type="text"
-                                        placeholder="Usuario o correo electrÃ³nico"
+                                        placeholder="Usuario o correo electrónico"
                                         value={loginIdentifier}
                                         onChange={(e) => setLoginIdentifier(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">ðŸ‘¤</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="login-password" className="form-group__label">
-                                    ContraseÃ±a
+                                    Contraseña
                                 </label>
                                 <div className="form-group__input-wrapper">
                                     <input
                                         id="login-password"
                                         className="form-group__input"
                                         type="password"
-                                        placeholder="Tu contraseÃ±a"
+                                        placeholder="Tu contraseña"
                                         value={loginPassword}
                                         onChange={(e) => setLoginPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">ðŸ”’</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -231,11 +231,11 @@ export const Forms = () => {
                                 className="auth-button auth-button--submit"
                                 disabled={isLoading}
                             >
-                                {isLoading ? "Procesando..." : "Iniciar SesiÃ³n"}
+                                {isLoading ? "Procesando..." : "Iniciar Sesión"}
                             </button>
 
                             <p className="auth-footer">
-                                Â¿No tienes cuenta?{" "}
+                                ¿No tienes cuenta?{" "}
                                 <button
                                     type="button"
                                     className="auth-link"
@@ -244,7 +244,7 @@ export const Forms = () => {
                                         setMessage("");
                                     }}
                                 >
-                                    RegÃ­strate aquÃ­
+                                    Regístrate aquí
                                 </button>
                             </p>
                         </form>
@@ -255,7 +255,7 @@ export const Forms = () => {
                         <form onSubmit={handleRegister} className="auth-form auth-form--register">
                             <div className="auth-header">
                                 <h1 className="auth-header__title">Crear Cuenta</h1>
-                                <p className="auth-header__subtitle">Ãšnete a nuestra comunidad de mÃºsicos</p>
+                                <p className="auth-header__subtitle">nete a nuestra comunidad de músicos</p>
                             </div>
 
                             <div className="form-group">
@@ -267,12 +267,12 @@ export const Forms = () => {
                                         id="register-username"
                                         className="form-group__input"
                                         type="text"
-                                        placeholder="Nombre de usuario Ãºnico"
+                                        placeholder="Nombre de usuario único"
                                         value={registerUsername}
                                         onChange={(e) => setRegisterUsername(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">ðŸ‘¤</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -285,48 +285,48 @@ export const Forms = () => {
                                         id="register-email"
                                         className="form-group__input"
                                         type="email"
-                                        placeholder="Tu correo electrÃ³nico"
+                                        placeholder="Tu correo electrónico"
                                         value={registerEmail}
                                         onChange={(e) => setRegisterEmail(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">ðŸ“§</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="register-password" className="form-group__label">
-                                    ContraseÃ±a
+                                    Contraseña
                                 </label>
                                 <div className="form-group__input-wrapper">
                                     <input
                                         id="register-password"
                                         className="form-group__input"
                                         type="password"
-                                        placeholder="MÃ­nimo 6 caracteres"
+                                        placeholder="Mínimo 6 caracteres"
                                         value={registerPassword}
                                         onChange={(e) => setRegisterPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">ðŸ”’</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="register-confirm-password" className="form-group__label">
-                                    Confirmar ContraseÃ±a
+                                    Confirmar Contraseña
                                 </label>
                                 <div className="form-group__input-wrapper">
                                     <input
                                         id="register-confirm-password"
                                         className="form-group__input"
                                         type="password"
-                                        placeholder="Repite tu contraseÃ±a"
+                                        placeholder="Repite tu contraseña"
                                         value={registerConfirmPassword}
                                         onChange={(e) => setRegisterConfirmPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">âœ“</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -345,7 +345,7 @@ export const Forms = () => {
                             </button>
 
                             <p className="auth-footer">
-                                Â¿Ya tienes cuenta?{" "}
+                                ¿Ya tienes cuenta?{" "}
                                 <button
                                     type="button"
                                     className="auth-link"
@@ -354,7 +354,7 @@ export const Forms = () => {
                                         setMessage("");
                                     }}
                                 >
-                                    Inicia sesiÃ³n
+                                    Inicia sesión
                                 </button>
                             </p>
                         </form>

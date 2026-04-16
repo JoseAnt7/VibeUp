@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "../../assets/css/Studio.css";
 import { API_BASE } from "../../utils/apiBase";
 
@@ -124,12 +124,12 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
 
     const headline = useMemo(() => {
         if (activeTab === "views") {
-            return `Has conseguido ${data.max_views || 0} visitas en los Ãºltimos 28 dÃ­as`;
+            return `Has conseguido ${data.max_views || 0} visitas en los últimos 28 días`;
         }
         if (activeTab === "watch") {
-            return `Tu contenido se ha reproducido ${formatMmSs(data.total_listen_seconds || 0)} en total en los Ãºltimos 28 dÃ­as`;
+            return `Tu contenido se ha reproducido ${formatMmSs(data.total_listen_seconds || 0)} en total en los últimos 28 días`;
         }
-        return `Has conseguido ${data.total_subs || 0} suscripciones en los Ãºltimos 28 dÃ­as`;
+        return `Has conseguido ${data.total_subs || 0} suscripciones en los últimos 28 días`;
     }, [activeTab, data.max_views, data.total_listen_seconds, data.total_subs]);
 
     const tabValues = useMemo(() => {
@@ -154,7 +154,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
                     ))}
                 </div>
 
-                <div className="analytics__range">Ãšltimos 28 dÃ­as</div>
+                <div className="analytics__range">ltimos 28 días</div>
             </div>
 
             <h2 className="analytics__headline">{headline}</h2>
@@ -162,7 +162,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
             <div className="analytics__grid">
                 <div className="analytics__main">
                     {loading ? (
-                        <div className="analytics__loading">Cargando mÃ©tricas...</div>
+                        <div className="analytics__loading">Cargando métricas...</div>
                     ) : (
                         <LineChart
                             dates={data.dates || []}
@@ -189,7 +189,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
                             </span>
                             <span className="analytics__card-kpi-label">Visitas (28d)</span>
                         </div>
-                        <button type="button" className="analytics__card-btn">Ver mÃ¡s</button>
+                        <button type="button" className="analytics__card-btn">Ver más</button>
                     </div>
                 </aside>
             </div>

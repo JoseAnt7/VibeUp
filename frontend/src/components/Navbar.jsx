@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Navbar.css';
 import Logo from '../assets/img/logo.png';
@@ -182,8 +182,8 @@ export const Navbar_Home = () => {
                 <div className="Navegacion__search">
                     <input
                         type="text"
-                        aria-label="Buscar canciones, artistas, Ã¡lbumes y eventos"
-                        placeholder="Â¿Que quieres reproducir?"
+                        aria-label="Buscar canciones, artistas, álbumes y eventos"
+                        placeholder="¿Que quieres reproducir?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => {
@@ -260,13 +260,13 @@ export const Navbar_Home = () => {
                                         setDropdownOpen(false);
                                     }}
                                 >
-                                    ConfiguraciÃ³n de Cuenta
+                                    Configuración de Cuenta
                                 </button>
                                 <button 
                                     className="user-menu__item user-menu__item--logout"
                                     onClick={handleLogout}
                                 >
-                                    Cerrar sesiÃ³n
+                                    Cerrar sesión
                                 </button>
                             </div>
                         )}
@@ -276,7 +276,7 @@ export const Navbar_Home = () => {
                     <>
                         <button onClick={() => {
                             navigate('/session')
-                        }}>Iniciar SesiÃ³n</button>
+                        }}>Iniciar Sesión</button>
                     </>
                 )}
 
@@ -341,13 +341,13 @@ export const Navbar_Artist = () => {
                                 className="user-menu__item"
                                 onClick={handleUploadSong}
                             >
-                                Subir CanciÃ³n
+                                Subir Canción
                             </button>
                             <button 
                                 className="user-menu__item"
                                 onClick={handleAddEvent}
                             >
-                                AÃ±adir Evento
+                                Añadir Evento
                             </button>
                         </div>
                     )}

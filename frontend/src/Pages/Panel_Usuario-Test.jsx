@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { API_BASE } from "../utils/apiBase";
 
@@ -24,7 +24,7 @@ export const Panel_Usuario = () => {
 
     const token = localStorage.getItem('access_token');
 
-    // ðŸ”¥ Obtener canciones y Ã¡lbumes (solo si es artista)
+    //  Obtener canciones y álbumes (solo si es artista)
     useEffect(() => {
         if (!token) return;
 
@@ -46,7 +46,7 @@ export const Panel_Usuario = () => {
 
     }, [API_BASE, token]);
 
-    // ðŸ”¥ Saber si es artista
+    //  Saber si es artista
     useEffect(() => {
         if (!token) return;
 
@@ -60,7 +60,7 @@ export const Panel_Usuario = () => {
     }, [token]);
 
     // =====================
-    // ðŸ“¦ SUBIDA ARCHIVOS
+    //  SUBIDA ARCHIVOS
     // =====================
 
     async function uploadImage(image) {
@@ -108,13 +108,13 @@ export const Panel_Usuario = () => {
     }
 
     // =====================
-    // ðŸŽµ CREAR CANCIÃ“N
+    //  CREAR CANCIN
     // =====================
 
     async function handleAddSong(e) {
         e.preventDefault();
 
-        if (!songTitle) return setMessage('El tÃ­tulo es obligatorio');
+        if (!songTitle) return setMessage('El título es obligatorio');
 
         const url_media = await uploadFile(file);
         const url_image = image ? await uploadImage(image) : null;
@@ -140,7 +140,7 @@ export const Panel_Usuario = () => {
                 return setMessage("Debes ser artista para subir canciones");
             }
 
-            if (!res.ok) return setMessage(data.msg || 'Error creando canciÃ³n');
+            if (!res.ok) return setMessage(data.msg || 'Error creando canción');
 
             setSongs(prev => [...prev, data.song]);
             setSongTitle('');
@@ -148,21 +148,21 @@ export const Panel_Usuario = () => {
             setFile(null);
             setImage(null);
 
-            setMessage('CanciÃ³n creada ðŸŽµ');
+            setMessage('Canción creada ');
 
         } catch {
-            setMessage('Error de conexiÃ³n');
+            setMessage('Error de conexión');
         }
     }
 
     // =====================
-    // ðŸ’¿ CREAR ÃLBUM
+    //  CREAR ÁLBUM
     // =====================
 
     async function handleAddAlbum(e) {
         e.preventDefault();
 
-        if (!albumTitle) return setMessage('El tÃ­tulo del Ã¡lbum es obligatorio');
+        if (!albumTitle) return setMessage('El título del álbum es obligatorio');
 
         try {
             const res = await fetch(`${API_BASE}/api/albums`, {
@@ -179,23 +179,23 @@ export const Panel_Usuario = () => {
             const data = await res.json();
 
             if (res.status === 403) {
-                return setMessage("Debes ser artista para crear Ã¡lbumes");
+                return setMessage("Debes ser artista para crear álbumes");
             }
 
-            if (!res.ok) return setMessage(data.msg || 'Error creando Ã¡lbum');
+            if (!res.ok) return setMessage(data.msg || 'Error creando álbum');
 
             setAlbums(prev => [...prev, data.album]);
             setAlbumTitle('');
 
-            setMessage('Ãlbum creado ðŸ’¿');
+            setMessage('Álbum creado ');
 
         } catch {
-            setMessage('Error de conexiÃ³n');
+            setMessage('Error de conexión');
         }
     }
 
     // =====================
-    // ðŸŽ¤ CREAR ARTISTA
+    //  CREAR ARTISTA
     // =====================
 
     async function createArtist() {
@@ -213,7 +213,7 @@ export const Panel_Usuario = () => {
 
         if (res.ok) {
             setIsArtist(true);
-            setMessage("Ahora eres artista ðŸŽ¤");
+            setMessage("Ahora eres artista ");
         }
     }
 
@@ -227,7 +227,7 @@ export const Panel_Usuario = () => {
                 <p>No hay usuario logeado.</p>
             )}
 
-            {/* ðŸŽ¤ CREAR ARTISTA */}
+            {/*  CREAR ARTISTA */}
             {!isArtist && (
                 <div>
                     <p>No eres artista.</p>
@@ -235,20 +235,20 @@ export const Panel_Usuario = () => {
                 </div>
             )}
 
-            {/* ðŸŽµ CREAR CANCIÃ“N */}
+            {/*  CREAR CANCIN */}
             {isArtist && (
                 <section>
-                    <h2>AÃ±adir CanciÃ³n</h2>
+                    <h2>Añadir Canción</h2>
                     <form onSubmit={handleAddSong} style={{ display: 'grid', gap: 8, maxWidth: 400 }}>
                         <input
-                            placeholder="TÃ­tulo"
+                            placeholder="Título"
                             value={songTitle}
                             onChange={e => setSongTitle(e.target.value)}
                             required
                         />
 
                         <input
-                            placeholder="DuraciÃ³n (seg)"
+                            placeholder="Duración (seg)"
                             value={songDuration}
                             onChange={e => setSongDuration(e.target.value)}
                         />
@@ -256,23 +256,23 @@ export const Panel_Usuario = () => {
                         <input type="file" accept="audio/*" required onChange={(e) => setFile(e.target.files[0])} />
                         <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
 
-                        <button type="submit">AÃ±adir CanciÃ³n</button>
+                        <button type="submit">Añadir Canción</button>
                     </form>
                 </section>
             )}
 
-            {/* ðŸ’¿ CREAR ÃLBUM */}
+            {/*  CREAR ÁLBUM */}
             {isArtist && (
                 <section style={{ marginTop: 20 }}>
-                    <h2>AÃ±adir Ãlbum</h2>
+                    <h2>Añadir Álbum</h2>
                     <form onSubmit={handleAddAlbum} style={{ display: 'grid', gap: 8, maxWidth: 400 }}>
                         <input
-                            placeholder="TÃ­tulo del Ã¡lbum"
+                            placeholder="Título del álbum"
                             value={albumTitle}
                             onChange={e => setAlbumTitle(e.target.value)}
                             required
                         />
-                        <button type="submit">Crear Ãlbum</button>
+                        <button type="submit">Crear Álbum</button>
                     </form>
                 </section>
             )}
@@ -294,8 +294,8 @@ export const Panel_Usuario = () => {
             </section>
 
             <section style={{ marginTop: 20 }}>
-                <h3>Tus Ã¡lbumes</h3>
-                {albums.length === 0 ? <p>No tienes Ã¡lbumes.</p> : (
+                <h3>Tus álbumes</h3>
+                {albums.length === 0 ? <p>No tienes álbumes.</p> : (
                     <ul>
                         {albums.map(a => (
                             <li key={a.id}>{a.title}</li>

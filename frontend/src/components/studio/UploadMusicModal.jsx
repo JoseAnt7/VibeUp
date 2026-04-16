@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
@@ -66,7 +66,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!title) return setMessage("TÃ­tulo obligatorio");
+        if (!title) return setMessage("Título obligatorio");
         if (!isEdit && !file) return setMessage("Archivo obligatorio");
 
         setLoading(true);
@@ -97,7 +97,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
         if (!res.ok) {
             setMessage(data.msg || "Error");
         } else {
-            setMessage(isEdit ? "Cambios guardados âœ…" : "CanciÃ³n subida ðŸŽµ");
+            setMessage(isEdit ? "Cambios guardados " : "Canción subida ");
             if (onSongSaved) onSongSaved(data.song);
             if (!isEdit) {
                 setTitle('');
@@ -126,8 +126,8 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
                 {/* HEADER */}
                 <div className="upload-modal__header">
-                    <h2>{isEdit ? "Editar canciÃ³n" : "Subir mÃºsica"}</h2>
-                    <button onClick={onClose}>âœ•</button>
+                    <h2>{isEdit ? "Editar canción" : "Subir música"}</h2>
+                    <button onClick={onClose}></button>
                 </div>
 
                 {/* BODY */}
@@ -137,7 +137,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                     <form className="upload-modal__form" onSubmit={handleSubmit}>
 
                         <div className="upload-modal__field">
-                            <label>TÃ­tulo</label>
+                            <label>Título</label>
                             <input
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
@@ -146,7 +146,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                         </div>
 
                         <div className="upload-modal__field">
-                            <label>DuraciÃ³n (segundos)</label>
+                            <label>Duración (segundos)</label>
                             <input
                                 type="number"
                                 value={duration}
@@ -155,13 +155,13 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                         </div>
 
                         <div className="upload-modal__field">
-                            <label>CategorÃ­a</label>
+                            <label>Categoría</label>
                             <select value={category} onChange={(e) => setCategory(e.target.value)}>
                                 <option value="pop">Pop</option>
                                 <option value="rock">Rock</option>
                                 <option value="reggaeton">Reggaeton</option>
                                 <option value="rap">Rap</option>
-                                <option value="electronic">ElectrÃ³nica</option>
+                                <option value="electronic">Electrónica</option>
                                 <option value="indie">Indie</option>
                                 <option value="other">Otra</option>
                             </select>
@@ -201,7 +201,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
                         <div className="upload-modal__info">
                             <p className="upload-modal__preview-title">
-                                {title || "TÃ­tulo de la canciÃ³n"}
+                                {title || "Título de la canción"}
                             </p>
                             <p className="upload-modal__preview-sub">
                                 {file ? file.name : "Archivo no seleccionado"}

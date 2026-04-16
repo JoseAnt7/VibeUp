@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faUserFriends } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,7 @@ function formatRange(startsAt, endsAt) {
     const opt = { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" };
     const s = a.toLocaleString("es-ES", opt);
     if (!b || Number.isNaN(b.getTime())) return s;
-    return `${s} â€” ${b.toLocaleString("es-ES", opt)}`;
+    return `${s}  ${b.toLocaleString("es-ES", opt)}`;
 }
 
 export const StudioEventDetailModal = ({ event, isOpen, onClose }) => {
@@ -51,18 +51,18 @@ export const StudioEventDetailModal = ({ event, isOpen, onClose }) => {
                 <h2 className="studio-event-detail__title">{event.title}</h2>
                 <p className="studio-event-detail__meta">{formatRange(event.starts_at, event.ends_at)}</p>
                 <p className="studio-event-detail__meta">{event.location}</p>
-                <p className="studio-event-detail__desc">{event.description || "Sin descripciÃ³n."}</p>
+                <p className="studio-event-detail__desc">{event.description || "Sin descripción."}</p>
                 <div className="studio-event-detail__count">
                     <FontAwesomeIcon icon={faUserFriends} />
                     <span>
-                        Total asistentes: {loading ? "â€¦" : total}
+                        Total asistentes: {loading ? "" : total}
                     </span>
                 </div>
                 <h3 className="studio-event-detail__list-title">Personas apuntadas</h3>
                 {loading ? (
-                    <p className="studio-event-detail__hint">Cargando listaâ€¦</p>
+                    <p className="studio-event-detail__hint">Cargando lista</p>
                 ) : attendees.length === 0 ? (
-                    <p className="studio-event-detail__hint">Nadie se ha apuntado aÃºn.</p>
+                    <p className="studio-event-detail__hint">Nadie se ha apuntado aún.</p>
                 ) : (
                     <ul className="studio-event-detail__list">
                         {attendees.map((a) => (

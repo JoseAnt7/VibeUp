@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API_BASE } from "../../utils/apiBase";
 
 const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
@@ -15,9 +15,9 @@ function formatWeekRangeLabel(isoStart, isoEnd) {
     const y1 = a.getUTCFullYear();
     const y2 = b.getUTCFullYear();
     if (m1 === m2 && y1 === y2) {
-        return `${d1}â€“${d2} ${m1} ${y1}`;
+        return `${d1}${d2} ${m1} ${y1}`;
     }
-    return `${d1} ${m1} â€“ ${d2} ${m2} ${y2}`;
+    return `${d1} ${m1}  ${d2} ${m2} ${y2}`;
 }
 
 function formatMmSs(seconds) {
@@ -70,28 +70,28 @@ export const WeeklyMetricCards = ({ onGoToStats }) => {
     const avgLabel =
         data.listen_events_count > 0 && data.avg_listen_seconds != null
             ? formatMmSs(data.avg_listen_seconds)
-            : "â€”";
+            : "";
 
     const blocks = [
         {
             key: "views",
             title: "Visitas esta semana",
-            hint: "Reproducciones Ãºnicas por IP en tus canciones",
-            value: loading ? "â€¦" : String(data.plays),
+            hint: "Reproducciones únicas por IP en tus canciones",
+            value: loading ? "" : String(data.plays),
             tab: "views",
         },
         {
             key: "watch",
             title: "Tiempo medio esta semana",
-            hint: "Media por sesiÃ³n de escucha registrada",
-            value: loading ? "â€¦" : avgLabel,
+            hint: "Media por sesión de escucha registrada",
+            value: loading ? "" : avgLabel,
             tab: "watch",
         },
         {
             key: "subs",
             title: "Nuevas suscripciones",
             hint: "Suscripciones nuevas a tu canal en esta semana",
-            value: loading ? "â€¦" : String(data.new_subscriptions),
+            value: loading ? "" : String(data.new_subscriptions),
             tab: "subs",
         },
     ];
@@ -112,7 +112,7 @@ export const WeeklyMetricCards = ({ onGoToStats }) => {
                         className="week-metric-card__more"
                         onClick={() => onGoToStats(b.tab)}
                     >
-                        Ver mÃ¡s
+                        Ver más
                     </button>
                 </div>
             ))}

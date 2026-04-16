@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import '../assets/css/Player.css';
 import Logo from '../assets/img/logo.png';
 import { safeMediaUrl } from '../utils/safeMediaUrl';
@@ -51,7 +51,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
             audio.removeEventListener("timeupdate", update);
             audio.removeEventListener("loadedmetadata", loadedMetadata);
         };
-    }, [song]); // ðŸ”¥ importante
+    }, [song]); //  importante
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -84,9 +84,9 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
             analyserRef.current.smoothingTimeConstant = 0.84;
         }
 
-        // Crear una Ãºnica vez. Si falla (restricciÃ³n navegador), no rompemos el audio.
+        // Crear una única vez. Si falla (restricción navegador), no rompemos el audio.
         // Usamos captureStream para NO tocar la ruta de salida de audio del elemento.
-        // AsÃ­ evitamos el bug donde al expandir se silencia pero el tiempo sigue corriendo.
+        // Así evitamos el bug donde al expandir se silencia pero el tiempo sigue corriendo.
         if (!sourceRef.current) {
             try {
                 const stream =
@@ -372,7 +372,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
                 <div className="player__center">
                     <div className="player__controls">
                         <button type="button" onClick={togglePlay}>
-                            {isPlaying ? "â¸" : "â–¶"}
+                            {isPlaying ? "⏸" : ""}
                         </button>
                     </div>
 
@@ -442,7 +442,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
 
                     <div className="player-expanded__controls">
                         <button type="button" className="player-expanded__play-btn" onClick={togglePlay}>
-                            {isPlaying ? "â¸" : "â–¶"}
+                            {isPlaying ? "⏸" : ""}
                         </button>
                     </div>
 

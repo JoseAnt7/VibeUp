@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
 import { AlbumModal } from "../components/AlbumModal";
@@ -255,9 +255,9 @@ export const SearchResults = () => {
                                 <h4>{item.title || item.name}</h4>
                                 {type === "events" ? (
                                     <>
-                                        <p>Evento Â· {item.artist_name || "â€”"}</p>
+                                        <p>Evento · {item.artist_name || ""}</p>
                                         <p>{formatEventSearchDate(item.starts_at)}</p>
-                                        <p className="search-results__card-place">{item.location || "â€”"}</p>
+                                        <p className="search-results__card-place">{item.location || ""}</p>
                                         <p>{item.attendee_count ?? 0} asistentes</p>
                                     </>
                                 ) : (
@@ -269,7 +269,7 @@ export const SearchResults = () => {
                                 )}
                                 {type === "songs" ? (
                                     <>
-                                        <p>{(item.category || "Sin categorÃ­a")} Â· â¤ï¸ {item.likes || 0} Â· â–¶ {item.plays || 0}</p>
+                                        <p>{(item.category || "Sin categoría")} · ❤️ {item.likes || 0} ·  {item.plays || 0}</p>
                                         <button
                                             type="button"
                                             className="search-results__like-btn"

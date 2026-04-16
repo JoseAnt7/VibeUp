@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadMusicModal } from "./UploadMusicModal";
 import { CreateAlbumModal } from "./CreateAlbumModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
@@ -39,7 +39,7 @@ export const Content = () => {
     }, [API_BASE, token]);
 
     const handleDeleteSong = async (song) => {
-        if (!window.confirm(`Â¿EstÃ¡s seguro de que quieres borrar esta canciÃ³n?\n\n${song.title}\n\nEsta acciÃ³n serÃ¡ irreversible.`)) return;
+        if (!window.confirm(`¿Estás seguro de que quieres borrar esta canción?\n\n${song.title}\n\nEsta acción será irreversible.`)) return;
         const res = await fetch(`${API_BASE}/api/songs/${song.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` }
@@ -48,7 +48,7 @@ export const Content = () => {
     };
 
     const handleDeleteAlbum = async (album) => {
-        if (!window.confirm(`Â¿EstÃ¡s seguro de que quieres borrar este Ã¡lbum?\n\n${album.title}\n\nEsta acciÃ³n serÃ¡ irreversible.`)) return;
+        if (!window.confirm(`¿Estás seguro de que quieres borrar este álbum?\n\n${album.title}\n\nEsta acción será irreversible.`)) return;
         const res = await fetch(`${API_BASE}/api/albums/${album.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` }
@@ -65,14 +65,14 @@ export const Content = () => {
                     className={`content__tab ${activeTab === "songs" ? "content__tab--active" : ""}`}
                     onClick={() => setActiveTab("songs")}
                 >
-                    MÃºsica
+                    Música
                 </button>
 
                 <button
                     className={`content__tab ${activeTab === "albums" ? "content__tab--active" : ""}`}
                     onClick={() => setActiveTab("albums")}
                 >
-                    Ãlbumes
+                    Álbumes
                 </button>
             </div>
 
@@ -82,11 +82,11 @@ export const Content = () => {
 
                     <div className="content__header content__header--songs">
                         <span>Imagen</span>
-                        <span>TÃ­tulo</span>
-                        <span>CategorÃ­a</span>
+                        <span>Título</span>
+                        <span>Categoría</span>
                         <span>Reproducciones</span>
                         <span>Likes</span>
-                        <span>DuraciÃ³n</span>
+                        <span>Duración</span>
                         <span>Archivo</span>
                         <span>Acciones</span>
                     </div>
@@ -160,7 +160,7 @@ export const Content = () => {
 
                     <div className="content__header content__header--albums">
                         <span>Imagen</span>
-                        <span>TÃ­tulo</span>
+                        <span>Título</span>
                         <span>Acciones</span>
                     </div>
 

@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { API_BASE } from "../../utils/apiBase";
@@ -65,7 +65,7 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
 
             if (onCreated) onCreated(data.artist);
         } catch {
-            setMessage("Error de conexiÃ³n");
+            setMessage("Error de conexión");
         } finally {
             setLoading(false);
         }
@@ -101,7 +101,7 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
                     </div>
 
                     <button className="artist-onboarding__submit" type="submit" disabled={loading}>
-                        {loading ? "Creando perfil..." : "Finalizar creaciÃ³n"}
+                        {loading ? "Creando perfil..." : "Finalizar creación"}
                     </button>
 
                     {message ? <p className="artist-onboarding__message">{message}</p> : null}

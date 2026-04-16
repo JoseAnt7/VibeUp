@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
@@ -15,7 +15,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    // ðŸŽµ Estados para manejo de canciones
+    //  Estados para manejo de canciones
     const [songs, setSongs] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [loadingSongs, setLoadingSongs] = useState(false);
@@ -67,7 +67,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
         }
     }
 
-    // ===== TOGGLE CANCIÃ“N =====
+    // ===== TOGGLE CANCIN =====
     const toggleSong = (songId) => {
         setSelectedSongs(prev => 
             prev.includes(songId) 
@@ -84,12 +84,12 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
         return supabase.storage.from('Images').getPublicUrl(fileName).data.publicUrl;
     }
 
-    // ===== CREAR/EDITAR ÃLBUM =====
+    // ===== CREAR/EDITAR ÁLBUM =====
     async function handleSubmit(e) {
         e.preventDefault();
 
         if (!title) {
-            return setMessage("TÃ­tulo obligatorio");
+            return setMessage("Título obligatorio");
         }
 
         setLoading(true);
@@ -117,9 +117,9 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
             const data = await res.json();
 
             if (!res.ok) {
-                setMessage(data.msg || (isEdit ? "Error al guardar el Ã¡lbum" : "Error al crear el Ã¡lbum"));
+                setMessage(data.msg || (isEdit ? "Error al guardar el álbum" : "Error al crear el álbum"));
             } else {
-                setMessage(isEdit ? "Cambios guardados âœ…" : "Ãlbum creado ðŸŽµ");
+                setMessage(isEdit ? "Cambios guardados " : "Álbum creado ");
                 setTimeout(() => {
                     if (isEdit) {
                         if (onAlbumSaved) onAlbumSaved(data.album);
@@ -151,8 +151,8 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
 
                 {/* HEADER */}
                 <div className="upload-modal__header">
-                    <h2>{isEdit ? "Editar Ãlbum" : "Crear Ãlbum"}</h2>
-                    <button onClick={onClose}>âœ•</button>
+                    <h2>{isEdit ? "Editar Álbum" : "Crear Álbum"}</h2>
+                    <button onClick={onClose}></button>
                 </div>
 
                 {/* BODY */}
@@ -161,15 +161,15 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
                     {/* LEFT */}
                     <form className="upload-modal__form" onSubmit={handleSubmit}>
 
-                        {/* TÃTULO */}
+                        {/* TÍTULO */}
                         <div className="upload-modal__field">
-                            <label>TÃ­tulo del Ãlbum</label>
+                            <label>Título del Álbum</label>
                             <input
                                 type="text"
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
                                 maxLength={100}
-                                placeholder="Ej: Mi primer Ã¡lbum"
+                                placeholder="Ej: Mi primer álbum"
                             />
                         </div>
 
@@ -252,7 +252,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
                                 marginTop: '16px'
                             }}
                         >
-                            {loading ? (isEdit ? "Guardando..." : "Creando...") : (isEdit ? "Guardar cambios" : "Crear Ãlbum")}
+                            {loading ? (isEdit ? "Guardando..." : "Creando...") : (isEdit ? "Guardar cambios" : "Crear Álbum")}
                         </button>
 
                         {message && <p style={{
@@ -277,11 +277,11 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
 
                         <div className="upload-modal__info">
                             <p className="upload-modal__preview-title">
-                                {title || "TÃ­tulo del Ã¡lbum"}
+                                {title || "Título del álbum"}
                             </p>
                             <p className="upload-modal__preview-sub">
                                 {selectedSongs.length > 0 
-                                    ? `${selectedSongs.length} canciÃ³n${selectedSongs.length !== 1 ? 'es' : ''} incluida${selectedSongs.length !== 1 ? 's' : ''}`
+                                    ? `${selectedSongs.length} canción${selectedSongs.length !== 1 ? 'es' : ''} incluida${selectedSongs.length !== 1 ? 's' : ''}`
                                     : "Sin canciones seleccionadas"
                                 }
                             </p>

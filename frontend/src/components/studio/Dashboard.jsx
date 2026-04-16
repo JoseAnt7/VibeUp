@@ -1,4 +1,4 @@
-﻿// components/studio/Dashboard.jsx
+// components/studio/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import { Card } from "./Card";
 import { StatsCard } from "./StatsCard";
@@ -56,15 +56,15 @@ export const Dashboard = ({ onGoToStats }) => {
                     {!hasSongs ? (
                         <Card className="studio__upload studio__hero-main">
                             <div className="upload">
-                                <div className="upload__icon">ðŸ“¤</div>
+                                <div className="upload__icon"></div>
                                 <p className="upload__text">
-                                    Â¿Quieres ver las mÃ©tricas de la mÃºsica que subas?
+                                    ¿Quieres ver las métricas de la música que subas?
                                 </p>
                                 <button
                                     className="upload__button"
                                     onClick={() => setOpenModal(true)}
                                 >
-                                    Subir mÃºsica
+                                    Subir música
                                 </button>
                                 <UploadMusicModal
                                     isOpen={openModal}
@@ -84,7 +84,7 @@ export const Dashboard = ({ onGoToStats }) => {
                 </div>
 
                 {onGoToStats ? (
-                    <div className="studio__week-metrics" aria-label="MÃ©tricas semanales">
+                    <div className="studio__week-metrics" aria-label="Métricas semanales">
                         <WeeklyMetricCards onGoToStats={onGoToStats} />
                     </div>
                 ) : null}
@@ -97,7 +97,7 @@ export const Dashboard = ({ onGoToStats }) => {
                             alt=""
                         />
                         <p className="education__text">
-                            Lanza tus proyectos este 2026. Â¿A quÃ© esperas?
+                            Lanza tus proyectos este 2026. ¿A qué esperas?
                         </p>
                     </div>
                 </Card>
