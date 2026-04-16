@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     const isEdit = Boolean(song?.id);
 
@@ -66,7 +66,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!title) return setMessage("Título obligatorio");
+        if (!title) return setMessage("TÃ­tulo obligatorio");
         if (!isEdit && !file) return setMessage("Archivo obligatorio");
 
         setLoading(true);
@@ -97,7 +97,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
         if (!res.ok) {
             setMessage(data.msg || "Error");
         } else {
-            setMessage(isEdit ? "Cambios guardados ✅" : "Canción subida 🎵");
+            setMessage(isEdit ? "Cambios guardados âœ…" : "CanciÃ³n subida ðŸŽµ");
             if (onSongSaved) onSongSaved(data.song);
             if (!isEdit) {
                 setTitle('');
@@ -126,8 +126,8 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
                 {/* HEADER */}
                 <div className="upload-modal__header">
-                    <h2>{isEdit ? "Editar canción" : "Subir música"}</h2>
-                    <button onClick={onClose}>✕</button>
+                    <h2>{isEdit ? "Editar canciÃ³n" : "Subir mÃºsica"}</h2>
+                    <button onClick={onClose}>âœ•</button>
                 </div>
 
                 {/* BODY */}
@@ -137,7 +137,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                     <form className="upload-modal__form" onSubmit={handleSubmit}>
 
                         <div className="upload-modal__field">
-                            <label>Título</label>
+                            <label>TÃ­tulo</label>
                             <input
                                 value={title}
                                 onChange={e => setTitle(e.target.value)}
@@ -146,7 +146,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                         </div>
 
                         <div className="upload-modal__field">
-                            <label>Duración (segundos)</label>
+                            <label>DuraciÃ³n (segundos)</label>
                             <input
                                 type="number"
                                 value={duration}
@@ -155,13 +155,13 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                         </div>
 
                         <div className="upload-modal__field">
-                            <label>Categoría</label>
+                            <label>CategorÃ­a</label>
                             <select value={category} onChange={(e) => setCategory(e.target.value)}>
                                 <option value="pop">Pop</option>
                                 <option value="rock">Rock</option>
                                 <option value="reggaeton">Reggaeton</option>
                                 <option value="rap">Rap</option>
-                                <option value="electronic">Electrónica</option>
+                                <option value="electronic">ElectrÃ³nica</option>
                                 <option value="indie">Indie</option>
                                 <option value="other">Otra</option>
                             </select>
@@ -201,7 +201,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
                         <div className="upload-modal__info">
                             <p className="upload-modal__preview-title">
-                                {title || "Título de la canción"}
+                                {title || "TÃ­tulo de la canciÃ³n"}
                             </p>
                             <p className="upload-modal__preview-sub">
                                 {file ? file.name : "Archivo no seleccionado"}

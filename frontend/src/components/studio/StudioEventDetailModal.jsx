@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { API_BASE } from "../../utils/apiBase";
 
 function formatRange(startsAt, endsAt) {
     const a = startsAt ? new Date(startsAt) : null;
@@ -10,12 +11,11 @@ function formatRange(startsAt, endsAt) {
     const opt = { weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" };
     const s = a.toLocaleString("es-ES", opt);
     if (!b || Number.isNaN(b.getTime())) return s;
-    return `${s} — ${b.toLocaleString("es-ES", opt)}`;
+    return `${s} â€” ${b.toLocaleString("es-ES", opt)}`;
 }
 
 export const StudioEventDetailModal = ({ event, isOpen, onClose }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [loading, setLoading] = useState(false);
     const [attendees, setAttendees] = useState([]);
@@ -51,18 +51,18 @@ export const StudioEventDetailModal = ({ event, isOpen, onClose }) => {
                 <h2 className="studio-event-detail__title">{event.title}</h2>
                 <p className="studio-event-detail__meta">{formatRange(event.starts_at, event.ends_at)}</p>
                 <p className="studio-event-detail__meta">{event.location}</p>
-                <p className="studio-event-detail__desc">{event.description || "Sin descripción."}</p>
+                <p className="studio-event-detail__desc">{event.description || "Sin descripciÃ³n."}</p>
                 <div className="studio-event-detail__count">
                     <FontAwesomeIcon icon={faUserFriends} />
                     <span>
-                        Total asistentes: {loading ? "…" : total}
+                        Total asistentes: {loading ? "â€¦" : total}
                     </span>
                 </div>
                 <h3 className="studio-event-detail__list-title">Personas apuntadas</h3>
                 {loading ? (
-                    <p className="studio-event-detail__hint">Cargando lista…</p>
+                    <p className="studio-event-detail__hint">Cargando listaâ€¦</p>
                 ) : attendees.length === 0 ? (
-                    <p className="studio-event-detail__hint">Nadie se ha apuntado aún.</p>
+                    <p className="studio-event-detail__hint">Nadie se ha apuntado aÃºn.</p>
                 ) : (
                     <ul className="studio-event-detail__list">
                         {attendees.map((a) => (
@@ -78,3 +78,4 @@ export const StudioEventDetailModal = ({ event, isOpen, onClose }) => {
 
     return ReactDOM.createPortal(modal, document.body);
 };
+

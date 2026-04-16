@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
+import { API_BASE } from "../../utils/apiBase";
 
 export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [name, setName] = useState(username || "");
     const [image, setImage] = useState(null);
@@ -65,7 +65,7 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
 
             if (onCreated) onCreated(data.artist);
         } catch {
-            setMessage("Error de conexión");
+            setMessage("Error de conexiÃ³n");
         } finally {
             setLoading(false);
         }
@@ -101,7 +101,7 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
                     </div>
 
                     <button className="artist-onboarding__submit" type="submit" disabled={loading}>
-                        {loading ? "Creando perfil..." : "Finalizar creación"}
+                        {loading ? "Creando perfil..." : "Finalizar creaciÃ³n"}
                     </button>
 
                     {message ? <p className="artist-onboarding__message">{message}</p> : null}
@@ -111,3 +111,4 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
         document.body
     );
 };
+

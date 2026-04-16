@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState } from "react";
 import "../../assets/css/Studio.css";
+import { API_BASE } from "../../utils/apiBase";
 
 const TAB_META = [
     { key: "views", label: "Visitas" },
@@ -92,8 +93,7 @@ function LineChart({ dates, values, valueFormatter, ariaLabel }) {
  * @param {{ activeTab?: 'views' | 'watch' | 'subs', onTabChange?: (t: 'views' | 'watch' | 'subs') => void }} props
  */
 export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [internalTab, setInternalTab] = useState("views");
     const activeTab = controlledTab ?? internalTab;
@@ -124,12 +124,12 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
 
     const headline = useMemo(() => {
         if (activeTab === "views") {
-            return `Has conseguido ${data.max_views || 0} visitas en los últimos 28 días`;
+            return `Has conseguido ${data.max_views || 0} visitas en los Ãºltimos 28 dÃ­as`;
         }
         if (activeTab === "watch") {
-            return `Tu contenido se ha reproducido ${formatMmSs(data.total_listen_seconds || 0)} en total en los últimos 28 días`;
+            return `Tu contenido se ha reproducido ${formatMmSs(data.total_listen_seconds || 0)} en total en los Ãºltimos 28 dÃ­as`;
         }
-        return `Has conseguido ${data.total_subs || 0} suscripciones en los últimos 28 días`;
+        return `Has conseguido ${data.total_subs || 0} suscripciones en los Ãºltimos 28 dÃ­as`;
     }, [activeTab, data.max_views, data.total_listen_seconds, data.total_subs]);
 
     const tabValues = useMemo(() => {
@@ -154,7 +154,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
                     ))}
                 </div>
 
-                <div className="analytics__range">Últimos 28 días</div>
+                <div className="analytics__range">Ãšltimos 28 dÃ­as</div>
             </div>
 
             <h2 className="analytics__headline">{headline}</h2>
@@ -162,7 +162,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
             <div className="analytics__grid">
                 <div className="analytics__main">
                     {loading ? (
-                        <div className="analytics__loading">Cargando métricas...</div>
+                        <div className="analytics__loading">Cargando mÃ©tricas...</div>
                     ) : (
                         <LineChart
                             dates={data.dates || []}
@@ -189,11 +189,12 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
                             </span>
                             <span className="analytics__card-kpi-label">Visitas (28d)</span>
                         </div>
-                        <button type="button" className="analytics__card-btn">Ver más</button>
+                        <button type="button" className="analytics__card-btn">Ver mÃ¡s</button>
                     </div>
                 </aside>
             </div>
         </div>
     );
 };
+
 

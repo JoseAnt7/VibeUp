@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 function toLocalInput(iso) {
     if (!iso) return "";
@@ -12,9 +13,9 @@ function toLocalInput(iso) {
 }
 
 /**
- * Permite eventos el mismo día con hora de fin posterior (ej. 21:00 → 23:30).
- * Si en el selector la fecha es la misma pero la hora de fin es «antes» que la de inicio
- * (típico: fin a medianoche 00:00 el mismo día del calendario), se interpreta como fin al día siguiente.
+ * Permite eventos el mismo dÃ­a con hora de fin posterior (ej. 21:00 â†’ 23:30).
+ * Si en el selector la fecha es la misma pero la hora de fin es Â«antesÂ» que la de inicio
+ * (tÃ­pico: fin a medianoche 00:00 el mismo dÃ­a del calendario), se interpreta como fin al dÃ­a siguiente.
  */
 function normalizeEndAfterStart(start, end) {
     if (end > start) return end;
@@ -31,8 +32,7 @@ function normalizeEndAfterStart(start, end) {
 }
 
 export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
     const isEdit = Boolean(event?.id);
 
     const [title, setTitle] = useState("");
@@ -79,19 +79,19 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
     async function handleSubmit(e) {
         e.preventDefault();
         if (!title.trim() || !location.trim() || !startsAt || !endsAt) {
-            setMessage("Completa título, ubicación e inicio/fin.");
+            setMessage("Completa tÃ­tulo, ubicaciÃ³n e inicio/fin.");
             return;
         }
         const start = new Date(startsAt);
         let end = normalizeEndAfterStart(start, new Date(endsAt));
         if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
-            setMessage("Fechas no válidas.");
+            setMessage("Fechas no vÃ¡lidas.");
             return;
         }
         if (end <= start) {
             setMessage(
                 "La hora de fin debe ser posterior a la de inicio. " +
-                    "Mismo día es válido si la hora de cierre es más tarde (ej. 21:00 → 23:30)."
+                    "Mismo dÃ­a es vÃ¡lido si la hora de cierre es mÃ¡s tarde (ej. 21:00 â†’ 23:30)."
             );
             return;
         }
@@ -164,9 +164,9 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
             <div className="upload-modal__overlay" onClick={onClose} />
             <div className="upload-modal__container">
                 <div className="upload-modal__header">
-                    <h2>{isEdit ? "Editar evento" : "Añadir evento"}</h2>
+                    <h2>{isEdit ? "Editar evento" : "AÃ±adir evento"}</h2>
                     <button type="button" onClick={onClose}>
-                        ✕
+                        âœ•
                     </button>
                 </div>
                 <div className="upload-modal__body">
@@ -182,16 +182,16 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
                             />
                         </div>
                         <div className="upload-modal__field">
-                            <label>Descripción</label>
+                            <label>DescripciÃ³n</label>
                             <textarea
                                 rows={4}
                                 value={description}
                                 onChange={(ev) => setDescription(ev.target.value)}
-                                placeholder="Detalles del evento…"
+                                placeholder="Detalles del eventoâ€¦"
                             />
                         </div>
                         <div className="upload-modal__field">
-                            <label>Ubicación</label>
+                            <label>UbicaciÃ³n</label>
                             <input
                                 type="text"
                                 value={location}
@@ -217,9 +217,9 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
                                 required
                             />
                             <small style={{ color: "var(--text-tertiary)", fontSize: 12, lineHeight: 1.4 }}>
-                                Puedes usar el mismo día con otra hora (ej. inicio 21:00, fin 23:30 o 00:00). Si
+                                Puedes usar el mismo dÃ­a con otra hora (ej. inicio 21:00, fin 23:30 o 00:00). Si
                                 eliges la misma fecha y una hora de fin menor que la de inicio (p. ej. medianoche
-                                00:00), se interpreta como el día siguiente a esa hora.
+                                00:00), se interpreta como el dÃ­a siguiente a esa hora.
                             </small>
                         </div>
                         <div className="upload-modal__field">
@@ -238,7 +238,7 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
                         ) : null}
                         {message ? <p style={{ color: "var(--text-secondary)", fontSize: 13 }}>{message}</p> : null}
                         <button type="submit" className="upload-modal__button upload-modal__button--primary" disabled={loading}>
-                            {loading ? "Guardando…" : isEdit ? "Guardar cambios" : "Publicar evento"}
+                            {loading ? "Guardandoâ€¦" : isEdit ? "Guardar cambios" : "Publicar evento"}
                         </button>
                     </form>
                 </div>
@@ -247,3 +247,4 @@ export const EventFormModal = ({ isOpen, onClose, event, onSaved }) => {
         document.body
     );
 };
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
 import { Footer } from "../components/Footer";
@@ -9,11 +9,11 @@ import '../assets/css/Home.css';
 import { Player } from "../components/Player";
 import { AlbumModal } from "../components/AlbumModal";
 import { EventPublicModal } from "../components/EventPublicModal";
+import { API_BASE } from "../utils/apiBase";
 
 export const Home = () => {
     const navigate = useNavigate();
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const [songs, setSongs] = useState([]);
+        const [songs, setSongs] = useState([]);
     const [artist, setArtist] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [events, setEvents] = useState([]);
@@ -38,7 +38,7 @@ export const Home = () => {
                     data.albums.map(a => ({
                         ...a,
                         title: a.title,
-                        subtitle: a.artist_name || 'Álbum',
+                        subtitle: a.artist_name || 'Ãlbum',
                         img: a.img || Logo
                     }))
                 );

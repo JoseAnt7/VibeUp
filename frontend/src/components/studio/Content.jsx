@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { UploadMusicModal } from "./UploadMusicModal";
 import { CreateAlbumModal } from "./CreateAlbumModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 export const Content = () => {
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     const [songs, setSongs] = useState([]);
     const [albums, setAlbums] = useState([]);
@@ -39,7 +39,7 @@ export const Content = () => {
     }, [API_BASE, token]);
 
     const handleDeleteSong = async (song) => {
-        if (!window.confirm(`¿Estás seguro de que quieres borrar esta canción?\n\n${song.title}\n\nEsta acción será irreversible.`)) return;
+        if (!window.confirm(`Â¿EstÃ¡s seguro de que quieres borrar esta canciÃ³n?\n\n${song.title}\n\nEsta acciÃ³n serÃ¡ irreversible.`)) return;
         const res = await fetch(`${API_BASE}/api/songs/${song.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` }
@@ -48,7 +48,7 @@ export const Content = () => {
     };
 
     const handleDeleteAlbum = async (album) => {
-        if (!window.confirm(`¿Estás seguro de que quieres borrar este álbum?\n\n${album.title}\n\nEsta acción será irreversible.`)) return;
+        if (!window.confirm(`Â¿EstÃ¡s seguro de que quieres borrar este Ã¡lbum?\n\n${album.title}\n\nEsta acciÃ³n serÃ¡ irreversible.`)) return;
         const res = await fetch(`${API_BASE}/api/albums/${album.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` }
@@ -65,14 +65,14 @@ export const Content = () => {
                     className={`content__tab ${activeTab === "songs" ? "content__tab--active" : ""}`}
                     onClick={() => setActiveTab("songs")}
                 >
-                    Música
+                    MÃºsica
                 </button>
 
                 <button
                     className={`content__tab ${activeTab === "albums" ? "content__tab--active" : ""}`}
                     onClick={() => setActiveTab("albums")}
                 >
-                    Álbumes
+                    Ãlbumes
                 </button>
             </div>
 
@@ -82,11 +82,11 @@ export const Content = () => {
 
                     <div className="content__header content__header--songs">
                         <span>Imagen</span>
-                        <span>Título</span>
-                        <span>Categoría</span>
+                        <span>TÃ­tulo</span>
+                        <span>CategorÃ­a</span>
                         <span>Reproducciones</span>
                         <span>Likes</span>
-                        <span>Duración</span>
+                        <span>DuraciÃ³n</span>
                         <span>Archivo</span>
                         <span>Acciones</span>
                     </div>
@@ -160,7 +160,7 @@ export const Content = () => {
 
                     <div className="content__header content__header--albums">
                         <span>Imagen</span>
-                        <span>Título</span>
+                        <span>TÃ­tulo</span>
                         <span>Acciones</span>
                     </div>
 

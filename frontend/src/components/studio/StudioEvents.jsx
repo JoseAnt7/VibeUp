@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+﻿import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { EventFormModal } from "./EventFormModal";
 import { StudioEventDetailModal } from "./StudioEventDetailModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 const WEEKDAYS = ["L", "M", "X", "J", "V", "S", "D"];
 
@@ -58,8 +59,7 @@ function buildCalendarCells(monthDate) {
 }
 
 export const StudioEvents = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [events, setEvents] = useState([]);
     const [nameFilter, setNameFilter] = useState("");
@@ -122,7 +122,7 @@ export const StudioEvents = () => {
     const monthLabel = monthCursor.toLocaleString("es-ES", { month: "long", year: "numeric" });
 
     const handleDelete = async (ev) => {
-        if (!window.confirm(`¿Eliminar el evento "${ev.title}"? Esta acción es irreversible.`)) return;
+        if (!window.confirm(`Â¿Eliminar el evento "${ev.title}"? Esta acciÃ³n es irreversible.`)) return;
         const res = await fetch(`${API_BASE}/api/me/events/${ev.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` }
@@ -148,17 +148,17 @@ export const StudioEvents = () => {
                     <input
                         id="ev-filter-name"
                         type="search"
-                        placeholder="Filtrar por título…"
+                        placeholder="Filtrar por tÃ­tuloâ€¦"
                         value={nameFilter}
                         onChange={(e) => setNameFilter(e.target.value)}
                     />
                 </div>
                 <div className="studio-events__field">
-                    <label htmlFor="ev-filter-loc">Ubicación</label>
+                    <label htmlFor="ev-filter-loc">UbicaciÃ³n</label>
                     <input
                         id="ev-filter-loc"
                         type="search"
-                        placeholder="Filtrar por ubicación…"
+                        placeholder="Filtrar por ubicaciÃ³nâ€¦"
                         value={locFilter}
                         onChange={(e) => setLocFilter(e.target.value)}
                     />
@@ -173,11 +173,11 @@ export const StudioEvents = () => {
             <div className="studio-events__calendar-wrap">
                 <div className="studio-events__calendar-head">
                     <button type="button" className="studio-events__cal-nav" onClick={() => setMonthCursor((d) => addMonths(d, -1))} aria-label="Mes anterior">
-                        ‹
+                        â€¹
                     </button>
                     <span className="studio-events__cal-title">{monthLabel}</span>
                     <button type="button" className="studio-events__cal-nav" onClick={() => setMonthCursor((d) => addMonths(d, 1))} aria-label="Mes siguiente">
-                        ›
+                        â€º
                     </button>
                 </div>
                 <div className="studio-events__weekdays">
@@ -209,17 +209,17 @@ export const StudioEvents = () => {
                     })}
                 </div>
                 <p className="studio-events__legend">
-                    <span className="studio-events__dot studio-events__dot--inline" /> Día con evento · Pulsa un día para filtrar
+                    <span className="studio-events__dot studio-events__dot--inline" /> DÃ­a con evento Â· Pulsa un dÃ­a para filtrar
                 </p>
             </div>
 
             <div className="content__table">
                 <div className="content__header content__header--events">
                     <span>Imagen</span>
-                    <span>Título</span>
+                    <span>TÃ­tulo</span>
                     <span>Inicio</span>
                     <span>Fin</span>
-                    <span>Ubicación</span>
+                    <span>UbicaciÃ³n</span>
                     <span>Asistentes</span>
                     <span>Acciones</span>
                 </div>
@@ -245,10 +245,10 @@ export const StudioEvents = () => {
                         </div>
                         <div className="content__cell">{ev.title}</div>
                         <div className="content__cell content__cell--muted">
-                            {ev.starts_at ? new Date(ev.starts_at).toLocaleString("es-ES") : "—"}
+                            {ev.starts_at ? new Date(ev.starts_at).toLocaleString("es-ES") : "â€”"}
                         </div>
                         <div className="content__cell content__cell--muted">
-                            {ev.ends_at ? new Date(ev.ends_at).toLocaleString("es-ES") : "—"}
+                            {ev.ends_at ? new Date(ev.ends_at).toLocaleString("es-ES") : "â€”"}
                         </div>
                         <div className="content__cell">{ev.location}</div>
                         <div className="content__cell">{ev.attendee_count ?? 0}</div>
@@ -301,3 +301,4 @@ export const StudioEvents = () => {
         </div>
     );
 };
+

@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+﻿import React, { useCallback, useEffect, useRef, useState } from "react";
 import '../assets/css/Player.css';
 import Logo from '../assets/img/logo.png';
 import { safeMediaUrl } from '../utils/safeMediaUrl';
+import { API_BASE } from "../utils/apiBase";
 
 export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const audioRef = useRef(null);
+        const audioRef = useRef(null);
     const currentSongIdRef = useRef(null);
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
@@ -51,7 +51,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
             audio.removeEventListener("timeupdate", update);
             audio.removeEventListener("loadedmetadata", loadedMetadata);
         };
-    }, [song]); // 🔥 importante
+    }, [song]); // ðŸ”¥ importante
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -84,9 +84,9 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
             analyserRef.current.smoothingTimeConstant = 0.84;
         }
 
-        // Crear una única vez. Si falla (restricción navegador), no rompemos el audio.
+        // Crear una Ãºnica vez. Si falla (restricciÃ³n navegador), no rompemos el audio.
         // Usamos captureStream para NO tocar la ruta de salida de audio del elemento.
-        // Así evitamos el bug donde al expandir se silencia pero el tiempo sigue corriendo.
+        // AsÃ­ evitamos el bug donde al expandir se silencia pero el tiempo sigue corriendo.
         if (!sourceRef.current) {
             try {
                 const stream =
@@ -372,7 +372,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
                 <div className="player__center">
                     <div className="player__controls">
                         <button type="button" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : "▶"}
+                            {isPlaying ? "â¸" : "â–¶"}
                         </button>
                     </div>
 
@@ -442,7 +442,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
 
                     <div className="player-expanded__controls">
                         <button type="button" className="player-expanded__play-btn" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : "▶"}
+                            {isPlaying ? "â¸" : "â–¶"}
                         </button>
                     </div>
 

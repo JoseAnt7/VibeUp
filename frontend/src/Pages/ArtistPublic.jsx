@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
 import { SectionGrid } from "../components/SectionGrid";
@@ -8,10 +8,10 @@ import { Player } from "../components/Player";
 import "../assets/css/ArtistPublic.css";
 import Logo from "../assets/img/logo.png";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 export const ArtistPublic = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const { artistName } = useParams();
+        const { artistName } = useParams();
 
     const [artist, setArtist] = useState(null);
     const [songs, setSongs] = useState([]);
@@ -180,7 +180,7 @@ export const ArtistPublic = () => {
                     <p className="artist-public__label">Canal de artista</p>
                     <h1 className="artist-public__title">{artist?.name || "Artista"}</h1>
                     <p className="artist-public__meta">
-                        {subscriberCount} {subscriberCount === 1 ? "suscriptor" : "suscriptores"} · {songs.length} canciones · {albums.length} albumes
+                        {subscriberCount} {subscriberCount === 1 ? "suscriptor" : "suscriptores"} Â· {songs.length} canciones Â· {albums.length} albumes
                     </p>
                     {showSubscribeControl ? (
                         <div className="artist-public__actions">
@@ -190,7 +190,7 @@ export const ArtistPublic = () => {
                                 onClick={toggleSubscription}
                                 disabled={subLoading}
                             >
-                                {subscribed ? "Anular suscripción" : "Suscribirse"}
+                                {subscribed ? "Anular suscripciÃ³n" : "Suscribirse"}
                             </button>
                         </div>
                     ) : null}
@@ -238,3 +238,4 @@ export const ArtistPublic = () => {
         </div>
     );
 };
+

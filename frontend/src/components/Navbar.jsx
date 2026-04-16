@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Navbar.css';
 import Logo from '../assets/img/logo.png';
@@ -16,12 +16,12 @@ import {
     isAccessTokenExpired,
 } from "../utils/authSession";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 export const Navbar_Home = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const [template, setTemplate] = useState('light');
+        const [template, setTemplate] = useState('light');
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [searchSource, setSearchSource] = useState({
@@ -182,8 +182,8 @@ export const Navbar_Home = () => {
                 <div className="Navegacion__search">
                     <input
                         type="text"
-                        aria-label="Buscar canciones, artistas, álbumes y eventos"
-                        placeholder="¿Que quieres reproducir?"
+                        aria-label="Buscar canciones, artistas, Ã¡lbumes y eventos"
+                        placeholder="Â¿Que quieres reproducir?"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => {
@@ -260,13 +260,13 @@ export const Navbar_Home = () => {
                                         setDropdownOpen(false);
                                     }}
                                 >
-                                    Configuración de Cuenta
+                                    ConfiguraciÃ³n de Cuenta
                                 </button>
                                 <button 
                                     className="user-menu__item user-menu__item--logout"
                                     onClick={handleLogout}
                                 >
-                                    Cerrar sesión
+                                    Cerrar sesiÃ³n
                                 </button>
                             </div>
                         )}
@@ -276,7 +276,7 @@ export const Navbar_Home = () => {
                     <>
                         <button onClick={() => {
                             navigate('/session')
-                        }}>Iniciar Sesión</button>
+                        }}>Iniciar SesiÃ³n</button>
                     </>
                 )}
 
@@ -341,13 +341,13 @@ export const Navbar_Artist = () => {
                                 className="user-menu__item"
                                 onClick={handleUploadSong}
                             >
-                                Subir Canción
+                                Subir CanciÃ³n
                             </button>
                             <button 
                                 className="user-menu__item"
                                 onClick={handleAddEvent}
                             >
-                                Añadir Evento
+                                AÃ±adir Evento
                             </button>
                         </div>
                     )}
