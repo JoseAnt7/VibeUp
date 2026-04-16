@@ -1,74 +1,111 @@
 # Despliegue en VPS (Hostinger) - React + Flask + MySQL con Docker
 
-Este proyecto queda preparado con:
+## Qué incluye este repo
 
-- `docker-compose.yml` en la raiz.
-- `backend` y `frontend` definidos por `build:` (igual de simple que antes con SQLite).
-- Servicio `mysql` en Docker con volumen persistente.
+- `docker-compose.yml`: **producción** — backend y frontend solo con `image:` (pull desde Docker Hub).
+- `docker-compose.local.yml`: **desarrollo local** — añade `build:` para compilar sin subir imágenes.
+- `.github/workflows/deploy-docker.yml`: al hacer **push a la rama `docker`**, construye imágenes, las sube a Docker Hub y despliega en el VPS por SSH.
+
+El volumen `mysql_data` no se borra con `docker compose pull` / `up -d` (solo recrea contenedores que cambian).
+
+---
 
 ## 1) Requisitos en el VPS
 
-- Docker Engine + Docker Compose plugin instalados.
-- Puerto `80` abierto en firewall.
+- Docker Engine + plugin Docker Compose.
+- Puerto `80` abierto.
+- Repositorio Git clonado en una carpeta fija (ej. `/home/tuusuario/vibeup`).
+- Rama `docker` disponible en el remoto (es la que usa el workflow).
 
-## 2) Configurar variables
+---
+
+## 2) Primera vez en el VPS (manual)
 
 ```bash
+cd /ruta/donde/clonas
+git clone -b docker https://github.com/TU_ORG/TU_REPO.git .
+# o: git clone ... && git checkout docker
+
 cp .env.example .env
 cp backend/.env.example backend/.env
 ```
 
-Edita `.env` (raiz) para MySQL:
+Edita `.env` en la raíz:
 
-- `MYSQL_DATABASE`
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
-- `MYSQL_ROOT_PASSWORD`
+- `BACKEND_IMAGE` y `FRONTEND_IMAGE`: mismo formato que en Docker Hub, por ejemplo `miusuario/vibeup-backend:latest` y `miusuario/vibeup-frontend:latest`.
+- Credenciales MySQL (`MYSQL_*`).
 
 Edita `backend/.env`:
 
-- `JWT_SECRET_KEY`
-- `APP_PUBLIC_URL` (tu dominio o IP publica real)
-- `MAIL_*` si vas a usar correo
+- `JWT_SECRET_KEY`, `APP_PUBLIC_URL`, correo si aplica.
 
-## 3) Levantar contenedores
+Levantar (tras el primer push que haya publicado las imágenes):
 
 ```bash
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 ```
 
-Ver logs:
+---
+
+## 3) Desarrollo en tu PC (sin Docker Hub)
+
+Compilar todo en local:
 
 ```bash
-docker compose logs -f
+cp .env.example .env
+# Pon BACKEND_IMAGE=vibeup-backend:local y FRONTEND_IMAGE=vibeup-frontend:local (o similar)
+
+docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 ```
 
-Estado:
+---
 
-```bash
-docker compose ps
-```
+## 4) CI/CD automático (rama `docker`)
 
-## 4) Actualizar en nuevos deploys
+Cada **push a `docker`** dispara el workflow:
 
-```bash
-git pull
-docker compose up -d --build
-```
-## 5) Persistencia de datos
+1. Build + push a Docker Hub: `TU_USUARIO/vibeup-backend:latest` y `TU_USUARIO/vibeup-frontend:latest`.
+2. SSH al VPS: `git pull` en la rama `docker`, `docker compose pull`, `docker compose up -d`.
 
-MySQL persiste en el volumen Docker:
+### Secretos en GitHub (Settings → Secrets and variables → Actions)
 
-- `mysql_data` -> `/var/lib/mysql`
+| Secreto | Descripción |
+|--------|-------------|
+| `DOCKERHUB_USERNAME` | Usuario de Docker Hub |
+| `DOCKERHUB_TOKEN` | Token de acceso (no la contraseña; créalo en Docker Hub → Account Settings → Security) |
+| `VPS_HOST` | IP o dominio del VPS |
+| `VPS_USER` | Usuario SSH (ej. `root` o `deploy`) |
+| `VPS_SSH_PRIVATE_KEY` | Contenido completo de la clave **privada** (la que corresponde a la pública en `~/.ssh/authorized_keys` del VPS) |
+| `VPS_DEPLOY_PATH` | Ruta absoluta al repo en el servidor (ej. `/home/deploy/vibeup`) |
 
-## 6) HTTPS recomendado (produccion)
+La clave privada no debe subirse al repo: solo va en **Secrets** de GitHub.
 
-Este compose publica en puerto `80`. Para HTTPS, lo ideal es poner un proxy inverso delante
-(Traefik, Nginx del host o Cloudflare Tunnel) con certificados Let's Encrypt.
+### Docker Hub
+
+Crea dos repositorios públicos (o privados; entonces en el VPS habría que hacer `docker login` una vez):
+
+- `vibeup-backend`
+- `vibeup-frontend`
+
+Los nombres deben coincidir con las etiquetas del workflow (`usuario/vibeup-backend` y `usuario/vibeup-frontend`).
+
+### Qué no hace falta tocar en el VPS
+
+- No borrar volúmenes en cada deploy.
+- No reinstalar Docker salvo el primer día.
+
+El usuario SSH debe poder ejecutar `docker` y `docker compose` (usuario en grupo `docker` o `sudo` según tu configuración).
+
+---
+
+## 5) HTTPS (producción)
+
+Para HTTPS delante del puerto 80, usa Nginx en el host, Traefik o Cloudflare con certificados.
+
+---
 
 ## Notas
 
-- Frontend debe estar construido para consumir API relativa: `/api/...`.
-- Nginx en frontend redirige `/api/*` al servicio backend interno.
-- Backend corre con Gunicorn en `0.0.0.0:5000`.
-- Backend espera que MySQL este disponible y saludable antes de iniciar.
+- Las peticiones del frontend van a rutas relativas `/api/...` y Nginx del contenedor frontend hace proxy al backend.
+- Si cambias solo código, un push a `docker` basta; el workflow actualiza imágenes y el VPS hace pull + up.

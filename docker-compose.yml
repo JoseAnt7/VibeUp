@@ -1,3 +1,6 @@
+# Producción / VPS (Hostinger): solo imágenes publicadas (pull).
+# Desarrollo local: usa también docker-compose.local.yml (ver DEPLOY_HOSTINGER_DOCKER.md).
+
 services:
   mysql:
     image: mysql:8.4
@@ -18,9 +21,7 @@ services:
       retries: 10
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: ${BACKEND_IMAGE:?Set BACKEND_IMAGE in .env (ej. usuario/vibeup-backend:latest)}
     container_name: vibeup-backend
     env_file:
       - ./backend/.env
@@ -36,11 +37,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        VITE_API_BASE: ""
+    image: ${FRONTEND_IMAGE:?Set FRONTEND_IMAGE in .env (ej. usuario/vibeup-frontend:latest)}
     container_name: vibeup-frontend
     depends_on:
       - backend
