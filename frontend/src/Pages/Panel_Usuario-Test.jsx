@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import { API_BASE } from "../utils/apiBase";
 
 export const Panel_Usuario = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
+    
     const [user, setUser] = useState(() => {
         const u = localStorage.getItem('user');
         return u ? JSON.parse(u) : null;
@@ -24,7 +24,7 @@ export const Panel_Usuario = () => {
 
     const token = localStorage.getItem('access_token');
 
-    // 🔥 Obtener canciones y álbumes (solo si es artista)
+    //  Obtener canciones y álbumes (solo si es artista)
     useEffect(() => {
         if (!token) return;
 
@@ -46,7 +46,7 @@ export const Panel_Usuario = () => {
 
     }, [API_BASE, token]);
 
-    // 🔥 Saber si es artista
+    //  Saber si es artista
     useEffect(() => {
         if (!token) return;
 
@@ -60,7 +60,7 @@ export const Panel_Usuario = () => {
     }, [token]);
 
     // =====================
-    // 📦 SUBIDA ARCHIVOS
+    //  SUBIDA ARCHIVOS
     // =====================
 
     async function uploadImage(image) {
@@ -108,7 +108,7 @@ export const Panel_Usuario = () => {
     }
 
     // =====================
-    // 🎵 CREAR CANCIÓN
+    //  CREAR CANCIN
     // =====================
 
     async function handleAddSong(e) {
@@ -148,7 +148,7 @@ export const Panel_Usuario = () => {
             setFile(null);
             setImage(null);
 
-            setMessage('Canción creada 🎵');
+            setMessage('Canción creada ');
 
         } catch {
             setMessage('Error de conexión');
@@ -156,7 +156,7 @@ export const Panel_Usuario = () => {
     }
 
     // =====================
-    // 💿 CREAR ÁLBUM
+    //  CREAR ÁLBUM
     // =====================
 
     async function handleAddAlbum(e) {
@@ -187,7 +187,7 @@ export const Panel_Usuario = () => {
             setAlbums(prev => [...prev, data.album]);
             setAlbumTitle('');
 
-            setMessage('Álbum creado 💿');
+            setMessage('Álbum creado ');
 
         } catch {
             setMessage('Error de conexión');
@@ -195,7 +195,7 @@ export const Panel_Usuario = () => {
     }
 
     // =====================
-    // 🎤 CREAR ARTISTA
+    //  CREAR ARTISTA
     // =====================
 
     async function createArtist() {
@@ -213,7 +213,7 @@ export const Panel_Usuario = () => {
 
         if (res.ok) {
             setIsArtist(true);
-            setMessage("Ahora eres artista 🎤");
+            setMessage("Ahora eres artista ");
         }
     }
 
@@ -227,7 +227,7 @@ export const Panel_Usuario = () => {
                 <p>No hay usuario logeado.</p>
             )}
 
-            {/* 🎤 CREAR ARTISTA */}
+            {/*  CREAR ARTISTA */}
             {!isArtist && (
                 <div>
                     <p>No eres artista.</p>
@@ -235,7 +235,7 @@ export const Panel_Usuario = () => {
                 </div>
             )}
 
-            {/* 🎵 CREAR CANCIÓN */}
+            {/*  CREAR CANCIN */}
             {isArtist && (
                 <section>
                     <h2>Añadir Canción</h2>
@@ -261,7 +261,7 @@ export const Panel_Usuario = () => {
                 </section>
             )}
 
-            {/* 💿 CREAR ÁLBUM */}
+            {/*  CREAR ÁLBUM */}
             {isArtist && (
                 <section style={{ marginTop: 20 }}>
                     <h2>Añadir Álbum</h2>

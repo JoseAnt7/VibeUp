@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { EventFormModal } from "./EventFormModal";
 import { StudioEventDetailModal } from "./StudioEventDetailModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 const WEEKDAYS = ["L", "M", "X", "J", "V", "S", "D"];
 
@@ -58,8 +59,7 @@ function buildCalendarCells(monthDate) {
 }
 
 export const StudioEvents = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [events, setEvents] = useState([]);
     const [nameFilter, setNameFilter] = useState("");
@@ -148,7 +148,7 @@ export const StudioEvents = () => {
                     <input
                         id="ev-filter-name"
                         type="search"
-                        placeholder="Filtrar por título…"
+                        placeholder="Filtrar por título"
                         value={nameFilter}
                         onChange={(e) => setNameFilter(e.target.value)}
                     />
@@ -158,7 +158,7 @@ export const StudioEvents = () => {
                     <input
                         id="ev-filter-loc"
                         type="search"
-                        placeholder="Filtrar por ubicación…"
+                        placeholder="Filtrar por ubicación"
                         value={locFilter}
                         onChange={(e) => setLocFilter(e.target.value)}
                     />
@@ -173,11 +173,11 @@ export const StudioEvents = () => {
             <div className="studio-events__calendar-wrap">
                 <div className="studio-events__calendar-head">
                     <button type="button" className="studio-events__cal-nav" onClick={() => setMonthCursor((d) => addMonths(d, -1))} aria-label="Mes anterior">
-                        ‹
+                        
                     </button>
                     <span className="studio-events__cal-title">{monthLabel}</span>
                     <button type="button" className="studio-events__cal-nav" onClick={() => setMonthCursor((d) => addMonths(d, 1))} aria-label="Mes siguiente">
-                        ›
+                        
                     </button>
                 </div>
                 <div className="studio-events__weekdays">
@@ -245,10 +245,10 @@ export const StudioEvents = () => {
                         </div>
                         <div className="content__cell">{ev.title}</div>
                         <div className="content__cell content__cell--muted">
-                            {ev.starts_at ? new Date(ev.starts_at).toLocaleString("es-ES") : "—"}
+                            {ev.starts_at ? new Date(ev.starts_at).toLocaleString("es-ES") : ""}
                         </div>
                         <div className="content__cell content__cell--muted">
-                            {ev.ends_at ? new Date(ev.ends_at).toLocaleString("es-ES") : "—"}
+                            {ev.ends_at ? new Date(ev.ends_at).toLocaleString("es-ES") : ""}
                         </div>
                         <div className="content__cell">{ev.location}</div>
                         <div className="content__cell">{ev.attendee_count ?? 0}</div>
@@ -301,3 +301,4 @@ export const StudioEvents = () => {
         </div>
     );
 };
+

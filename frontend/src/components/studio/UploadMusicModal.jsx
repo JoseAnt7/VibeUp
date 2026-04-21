@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     const isEdit = Boolean(song?.id);
 
@@ -97,7 +97,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
         if (!res.ok) {
             setMessage(data.msg || "Error");
         } else {
-            setMessage(isEdit ? "Cambios guardados ✅" : "Canción subida 🎵");
+            setMessage(isEdit ? "Cambios guardados " : "Canción subida ");
             if (onSongSaved) onSongSaved(data.song);
             if (!isEdit) {
                 setTitle('');
@@ -127,7 +127,7 @@ export const UploadMusicModal = ({ isOpen, onClose, song, onSongSaved }) => {
                 {/* HEADER */}
                 <div className="upload-modal__header">
                     <h2>{isEdit ? "Editar canción" : "Subir música"}</h2>
-                    <button onClick={onClose}>✕</button>
+                    <button onClick={onClose}></button>
                 </div>
 
                 {/* BODY */}

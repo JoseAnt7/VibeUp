@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/AuthForms.css";
+import { API_BASE } from "../utils/apiBase";
 
 export const Forms = () => {
     const navigate = useNavigate();
@@ -21,8 +22,7 @@ export const Forms = () => {
     const [messageType, setMessageType] = useState(""); // 'success' o 'error'
     const [isLoading, setIsLoading] = useState(false);
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
+    
     // Validar email
     const isValidEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -198,7 +198,7 @@ export const Forms = () => {
                                         onChange={(e) => setLoginIdentifier(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">👤</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@ export const Forms = () => {
                                         onChange={(e) => setLoginPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">🔒</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -255,7 +255,7 @@ export const Forms = () => {
                         <form onSubmit={handleRegister} className="auth-form auth-form--register">
                             <div className="auth-header">
                                 <h1 className="auth-header__title">Crear Cuenta</h1>
-                                <p className="auth-header__subtitle">Únete a nuestra comunidad de músicos</p>
+                                <p className="auth-header__subtitle">nete a nuestra comunidad de músicos</p>
                             </div>
 
                             <div className="form-group">
@@ -272,7 +272,7 @@ export const Forms = () => {
                                         onChange={(e) => setRegisterUsername(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">👤</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -290,7 +290,7 @@ export const Forms = () => {
                                         onChange={(e) => setRegisterEmail(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">📧</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -308,7 +308,7 @@ export const Forms = () => {
                                         onChange={(e) => setRegisterPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">🔒</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 
@@ -326,7 +326,7 @@ export const Forms = () => {
                                         onChange={(e) => setRegisterConfirmPassword(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <span className="form-group__icon">✓</span>
+                                    <span className="form-group__icon"></span>
                                 </div>
                             </div>
 

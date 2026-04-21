@@ -5,6 +5,7 @@ import { StatsCard } from "./StatsCard";
 import { UploadMusicModal } from "./UploadMusicModal";
 import { RecentSongCard } from "./RecentSongCard";
 import { WeeklyMetricCards } from "./WeeklyMetricCards";
+import { API_BASE } from "../../utils/apiBase";
 
 /**
  * @param {{ onGoToStats?: (tab: 'views' | 'watch' | 'subs') => void }} props
@@ -15,8 +16,7 @@ export const Dashboard = ({ onGoToStats }) => {
     const [songs, setSongs] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     useEffect(() => {
         if (!token) return;
@@ -56,7 +56,7 @@ export const Dashboard = ({ onGoToStats }) => {
                     {!hasSongs ? (
                         <Card className="studio__upload studio__hero-main">
                             <div className="upload">
-                                <div className="upload__icon">📤</div>
+                                <div className="upload__icon"></div>
                                 <p className="upload__text">
                                     ¿Quieres ver las métricas de la música que subas?
                                 </p>

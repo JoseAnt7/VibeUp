@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Navbar_Artist } from "../../components/Navbar.jsx";
 import { Sidebar } from "../../components/Sidebar.jsx";
 import '../../assets/css/Studio.css';
@@ -7,6 +7,7 @@ import { Content } from "../../components/studio/Content.jsx";
 import { CreateArtistProfileModal } from "../../components/studio/CreateArtistProfileModal.jsx";
 import { StudioAnalytics } from "../../components/studio/StudioAnalytics.jsx";
 import { StudioEvents } from "../../components/studio/StudioEvents.jsx";
+import { API_BASE } from "../../utils/apiBase";
 
 export const Artist = () => {
 
@@ -20,8 +21,7 @@ export const Artist = () => {
     const [view, setView] = useState("dashboard");
     const [analyticsTab, setAnalyticsTab] = useState("views");
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-
+    
     useEffect(() => {
         if (!token) {
             setCheckingArtist(false);

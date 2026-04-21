@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     clearAuthSession,
     isAccessTokenExpired,
     notifySessionCleared,
 } from "../utils/authSession";
+import { API_BASE } from "../utils/apiBase";
 
 export const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
@@ -22,8 +23,7 @@ export const ProtectedRoute = ({ children }) => {
             }
 
             try {
-                const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-                const res = await fetch(`${API_BASE}/api/validate-token`, {
+                                const res = await fetch(`${API_BASE}/api/validate-token`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -61,3 +61,4 @@ export const ProtectedRoute = ({ children }) => {
 
     return isAuthenticated ? children : null;
 };
+

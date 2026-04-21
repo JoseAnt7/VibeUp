@@ -8,10 +8,10 @@ import { Player } from "../components/Player";
 import "../assets/css/ArtistPublic.css";
 import Logo from "../assets/img/logo.png";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 export const ArtistPublic = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const { artistName } = useParams();
+        const { artistName } = useParams();
 
     const [artist, setArtist] = useState(null);
     const [songs, setSongs] = useState([]);
@@ -238,3 +238,4 @@ export const ArtistPublic = () => {
         </div>
     );
 };
+

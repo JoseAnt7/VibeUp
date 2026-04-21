@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { UploadMusicModal } from "./UploadMusicModal";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 export const RecentSongCard = () => {
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     const [recentSong, setRecentSong] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -76,7 +76,7 @@ export const RecentSongCard = () => {
 
                 {/* HEADER */}
                 <div className="recent-song-card__header">
-                    <h3 className="recent-song-card__title">Última canción subida</h3>
+                    <h3 className="recent-song-card__title">ltima canción subida</h3>
                     <span className="recent-song-card__badge">Publicado</span>
                 </div>
 
@@ -93,12 +93,12 @@ export const RecentSongCard = () => {
                             />
                         ) : (
                             <div className="recent-song-card__image-placeholder">
-                                🎵
+                                
                             </div>
                         )}
                     </div>
 
-                    {/* RIGHT - INFORMACIÓN */}
+                    {/* RIGHT - INFORMACIN */}
                     <div className="recent-song-card__info">
 
                         <div className="recent-song-card__content">
@@ -164,3 +164,4 @@ export const RecentSongCard = () => {
         </>
     );
 };
+

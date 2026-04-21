@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
+import { API_BASE } from "../../utils/apiBase";
 
 export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [name, setName] = useState(username || "");
     const [image, setImage] = useState(null);
@@ -111,3 +111,4 @@ export const CreateArtistProfileModal = ({ isOpen, onCreated, username }) => {
         document.body
     );
 };
+

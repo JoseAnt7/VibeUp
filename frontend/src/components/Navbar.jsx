@@ -16,12 +16,12 @@ import {
     isAccessTokenExpired,
 } from "../utils/authSession";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 export const Navbar_Home = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const [template, setTemplate] = useState('light');
+        const [template, setTemplate] = useState('light');
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [searchSource, setSearchSource] = useState({
@@ -314,7 +314,7 @@ export const Navbar_Artist = () => {
 
     return (
         <div className="Contendor_Principal_Navbar">
-            <img src={Logo} alt="Logo" width="72px" />
+            <img src={Logo} alt="Logo" width="72px" onClick={() => navigate('/')} style={{ cursor: "pointer" }}/>
             <div className="Navegacion">
                 <FontAwesomeIcon icon={faHouse} onClick={() => navigate('/')} style={{ cursor: "pointer" }} />
                 <input type="text" aria-label="Buscar contenido subido" placeholder="Busca tu contenido subido" />

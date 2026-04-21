@@ -1,4 +1,22 @@
 services:
+  mysql:
+    image: mysql:8.4
+    container_name: vibeup-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-vibeup}
+      MYSQL_USER: ${MYSQL_USER:-vibeup}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change_mysql_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$${MYSQL_ROOT_PASSWORD}\" mysqladmin ping -h localhost -uroot --silent"]
+      start_period: 40s
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   backend:
     build:
       context: ./backend
@@ -9,8 +27,10 @@ services:
     environment:
       PORT: 5000
       PYTHONUNBUFFERED: 1
-    volumes:
-      - backend_instance:/app/instance
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-vibeup}:${MYSQL_PASSWORD:-change_mysql_password}@mysql:3306/${MYSQL_DATABASE:-vibeup}
+    depends_on:
+      mysql:
+        condition: service_healthy
     expose:
       - "5000"
     restart: unless-stopped
@@ -29,4 +49,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  backend_instance:
+  mysql_data:
