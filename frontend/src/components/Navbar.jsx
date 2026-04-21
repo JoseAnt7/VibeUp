@@ -314,7 +314,7 @@ export const Navbar_Artist = () => {
 
     return (
         <div className="Contendor_Principal_Navbar">
-            <img src={Logo} alt="Logo" width="72px" />
+            <img src={Logo} alt="Logo" width="72px" onClick={() => navigate('/')} style={{ cursor: "pointer" }}/>
             <div className="Navegacion">
                 <FontAwesomeIcon icon={faHouse} onClick={() => navigate('/')} style={{ cursor: "pointer" }} />
                 <input type="text" aria-label="Buscar contenido subido" placeholder="Busca tu contenido subido" />
