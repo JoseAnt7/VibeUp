@@ -1,13 +1,13 @@
 // components/studio/StatsCard.jsx
 import React, { useEffect, useState } from "react";
 import { Card } from "./Card";
+import { API_BASE } from "../../utils/apiBase";
 
 /**
  * @param {{ onGoToStats?: (tab?: 'views' | 'watch' | 'subs') => void }} props
  */
 export const StatsCard = ({ onGoToStats }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
     const [subscriberCount, setSubscriberCount] = useState(0);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export const StatsCard = ({ onGoToStats }) => {
 
                 <div className="stats__section">
                     <p className="stats__label">Resumen</p>
-                    <p className="stats__sub">Últimos 28 días</p>
+                    <p className="stats__sub">ltimos 28 días</p>
 
                     <div className="stats__row">
                         <span>Visualizaciones</span>
@@ -62,3 +62,4 @@ export const StatsCard = ({ onGoToStats }) => {
         </Card>
     );
 };
+

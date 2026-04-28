@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import '../assets/css/Player.css';
 import Logo from '../assets/img/logo.png';
 import { safeMediaUrl } from '../utils/safeMediaUrl';
+import { API_BASE } from "../utils/apiBase";
 
 export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const audioRef = useRef(null);
+        const audioRef = useRef(null);
     const currentSongIdRef = useRef(null);
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
@@ -51,7 +51,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
             audio.removeEventListener("timeupdate", update);
             audio.removeEventListener("loadedmetadata", loadedMetadata);
         };
-    }, [song]); // 🔥 importante
+    }, [song]); //  importante
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -372,7 +372,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
                 <div className="player__center">
                     <div className="player__controls">
                         <button type="button" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : "▶"}
+                            {isPlaying ? "⏸" : ""}
                         </button>
                     </div>
 
@@ -442,7 +442,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
 
                     <div className="player-expanded__controls">
                         <button type="button" className="player-expanded__play-btn" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : "▶"}
+                            {isPlaying ? "⏸" : ""}
                         </button>
                     </div>
 

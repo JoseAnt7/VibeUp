@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE } from "../../utils/apiBase";
 
 const MONTHS_ES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 
@@ -14,9 +15,9 @@ function formatWeekRangeLabel(isoStart, isoEnd) {
     const y1 = a.getUTCFullYear();
     const y2 = b.getUTCFullYear();
     if (m1 === m2 && y1 === y2) {
-        return `${d1}–${d2} ${m1} ${y1}`;
+        return `${d1}${d2} ${m1} ${y1}`;
     }
-    return `${d1} ${m1} – ${d2} ${m2} ${y2}`;
+    return `${d1} ${m1}  ${d2} ${m2} ${y2}`;
 }
 
 function formatMmSs(seconds) {
@@ -30,8 +31,7 @@ function formatMmSs(seconds) {
  * @param {{ onGoToStats: (tab: 'views' | 'watch' | 'subs') => void }} props
  */
 export const WeeklyMetricCards = ({ onGoToStats }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({
@@ -70,28 +70,28 @@ export const WeeklyMetricCards = ({ onGoToStats }) => {
     const avgLabel =
         data.listen_events_count > 0 && data.avg_listen_seconds != null
             ? formatMmSs(data.avg_listen_seconds)
-            : "—";
+            : "";
 
     const blocks = [
         {
             key: "views",
             title: "Visitas esta semana",
             hint: "Reproducciones únicas por IP en tus canciones",
-            value: loading ? "…" : String(data.plays),
+            value: loading ? "" : String(data.plays),
             tab: "views",
         },
         {
             key: "watch",
             title: "Tiempo medio esta semana",
             hint: "Media por sesión de escucha registrada",
-            value: loading ? "…" : avgLabel,
+            value: loading ? "" : avgLabel,
             tab: "watch",
         },
         {
             key: "subs",
             title: "Nuevas suscripciones",
             hint: "Suscripciones nuevas a tu canal en esta semana",
-            value: loading ? "…" : String(data.new_subscriptions),
+            value: loading ? "" : String(data.new_subscriptions),
             tab: "subs",
         },
     ];
@@ -119,3 +119,4 @@ export const WeeklyMetricCards = ({ onGoToStats }) => {
         </>
     );
 };
+

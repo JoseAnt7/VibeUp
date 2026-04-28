@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { supabase } from "../../supabaseClient";
 import { safeMediaUrl } from "../../utils/safeMediaUrl";
+import { API_BASE } from "../../utils/apiBase";
 
 export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlbumSaved }) => {
 
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem('access_token');
+        const token = localStorage.getItem('access_token');
 
     const isEdit = Boolean(album?.id);
     const [title, setTitle] = useState('');
@@ -15,7 +15,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-    // 🎵 Estados para manejo de canciones
+    //  Estados para manejo de canciones
     const [songs, setSongs] = useState([]);
     const [selectedSongs, setSelectedSongs] = useState([]);
     const [loadingSongs, setLoadingSongs] = useState(false);
@@ -67,7 +67,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
         }
     }
 
-    // ===== TOGGLE CANCIÓN =====
+    // ===== TOGGLE CANCIN =====
     const toggleSong = (songId) => {
         setSelectedSongs(prev => 
             prev.includes(songId) 
@@ -119,7 +119,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
             if (!res.ok) {
                 setMessage(data.msg || (isEdit ? "Error al guardar el álbum" : "Error al crear el álbum"));
             } else {
-                setMessage(isEdit ? "Cambios guardados ✅" : "Álbum creado 🎵");
+                setMessage(isEdit ? "Cambios guardados " : "Álbum creado ");
                 setTimeout(() => {
                     if (isEdit) {
                         if (onAlbumSaved) onAlbumSaved(data.album);
@@ -152,7 +152,7 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
                 {/* HEADER */}
                 <div className="upload-modal__header">
                     <h2>{isEdit ? "Editar Álbum" : "Crear Álbum"}</h2>
-                    <button onClick={onClose}>✕</button>
+                    <button onClick={onClose}></button>
                 </div>
 
                 {/* BODY */}
@@ -295,3 +295,4 @@ export const CreateAlbumModal = ({ isOpen, onClose, onAlbumCreated, album, onAlb
         document.body
     );
 };
+

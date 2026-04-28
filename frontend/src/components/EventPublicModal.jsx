@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faUserFriends, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../assets/img/logo.png";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 function formatRange(startsAt, endsAt) {
     const a = startsAt ? new Date(startsAt) : null;
@@ -15,13 +16,12 @@ function formatRange(startsAt, endsAt) {
     const startStr = a.toLocaleString("es-ES", opt);
     if (!b || Number.isNaN(b.getTime())) return startStr;
     const endStr = b.toLocaleString("es-ES", opt);
-    return `${startStr} — ${endStr}`;
+    return `${startStr}  ${endStr}`;
 }
 
 export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => {
     const navigate = useNavigate();
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState(null);
@@ -93,7 +93,7 @@ export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => 
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 {loading ? (
-                    <p className="event-modal__loading">Cargando…</p>
+                    <p className="event-modal__loading">Cargando</p>
                 ) : error ? (
                     <p className="event-modal__error">{error}</p>
                 ) : event ? (
@@ -148,3 +148,4 @@ export const EventPublicModal = ({ eventId, isOpen, onClose, onRsvpChange }) => 
 
     return ReactDOM.createPortal(modal, document.body);
 };
+

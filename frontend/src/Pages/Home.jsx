@@ -9,11 +9,11 @@ import '../assets/css/Home.css';
 import { Player } from "../components/Player";
 import { AlbumModal } from "../components/AlbumModal";
 import { EventPublicModal } from "../components/EventPublicModal";
+import { API_BASE } from "../utils/apiBase";
 
 export const Home = () => {
     const navigate = useNavigate();
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const [songs, setSongs] = useState([]);
+        const [songs, setSongs] = useState([]);
     const [artist, setArtist] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [events, setEvents] = useState([]);
@@ -177,6 +177,7 @@ export const Home = () => {
                 onClose={closeEventModal}
                 onRsvpChange={(id, count) => handleEventRsvp(id, count)}
             />
+            <p>Prueba</p>
         </div>
     )
 }

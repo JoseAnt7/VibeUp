@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "../../assets/css/Studio.css";
+import { API_BASE } from "../../utils/apiBase";
 
 const TAB_META = [
     { key: "views", label: "Visitas" },
@@ -92,8 +93,7 @@ function LineChart({ dates, values, valueFormatter, ariaLabel }) {
  * @param {{ activeTab?: 'views' | 'watch' | 'subs', onTabChange?: (t: 'views' | 'watch' | 'subs') => void }} props
  */
 export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token");
 
     const [internalTab, setInternalTab] = useState("views");
     const activeTab = controlledTab ?? internalTab;
@@ -154,7 +154,7 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
                     ))}
                 </div>
 
-                <div className="analytics__range">Últimos 28 días</div>
+                <div className="analytics__range">ltimos 28 días</div>
             </div>
 
             <h2 className="analytics__headline">{headline}</h2>
@@ -196,4 +196,5 @@ export const StudioAnalytics = ({ activeTab: controlledTab, onTabChange }) => {
         </div>
     );
 };
+
 

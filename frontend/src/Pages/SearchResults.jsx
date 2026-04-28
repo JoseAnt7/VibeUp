@@ -7,6 +7,7 @@ import { Player } from "../components/Player";
 import "../assets/css/SearchResults.css";
 import Logo from "../assets/img/logo.png";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
+import { API_BASE } from "../utils/apiBase";
 
 const FILTER_KEYS = ["songs", "artists", "albums", "events"];
 
@@ -43,8 +44,7 @@ const getWrappedSlice = (arr, start, count) => {
 };
 
 export const SearchResults = () => {
-    const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-    const [searchParams] = useSearchParams();
+        const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const queryFromUrl = searchParams.get("q") || "";
@@ -255,9 +255,9 @@ export const SearchResults = () => {
                                 <h4>{item.title || item.name}</h4>
                                 {type === "events" ? (
                                     <>
-                                        <p>Evento · {item.artist_name || "—"}</p>
+                                        <p>Evento · {item.artist_name || ""}</p>
                                         <p>{formatEventSearchDate(item.starts_at)}</p>
-                                        <p className="search-results__card-place">{item.location || "—"}</p>
+                                        <p className="search-results__card-place">{item.location || ""}</p>
                                         <p>{item.attendee_count ?? 0} asistentes</p>
                                     </>
                                 ) : (
@@ -269,7 +269,7 @@ export const SearchResults = () => {
                                 )}
                                 {type === "songs" ? (
                                     <>
-                                        <p>{(item.category || "Sin categoría")} · ❤️ {item.likes || 0} · ▶ {item.plays || 0}</p>
+                                        <p>{(item.category || "Sin categoría")} · ❤️ {item.likes || 0} ·  {item.plays || 0}</p>
                                         <button
                                             type="button"
                                             className="search-results__like-btn"
@@ -379,3 +379,4 @@ export const SearchResults = () => {
         </div>
     );
 };
+
