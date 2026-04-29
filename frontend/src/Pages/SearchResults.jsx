@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar_Home } from "../components/Navbar";
-import { AlbumModal } from "../components/AlbumModal";
-import { EventPublicModal } from "../components/EventPublicModal";
 import { Player } from "../components/Player";
 import "../assets/css/SearchResults.css";
 import Logo from "../assets/img/logo.png";
 import { safeMediaUrl } from "../utils/safeMediaUrl";
 import { API_BASE } from "../utils/apiBase";
+import { toSlug } from "../utils/slug";
 
 const FILTER_KEYS = ["songs", "artists", "albums", "events"];
 
@@ -58,10 +57,6 @@ export const SearchResults = () => {
     const [playerQueue, setPlayerQueue] = useState([]);
     const [queueIndex, setQueueIndex] = useState(0);
     const [playbackContext, setPlaybackContext] = useState(null);
-    const [selectedAlbum, setSelectedAlbum] = useState(null);
-    const [isAlbumModalOpen, setIsAlbumModalOpen] = useState(false);
-    const [selectedEventId, setSelectedEventId] = useState(null);
-    const [isEventModalOpen, setIsEventModalOpen] = useState(false);
 
     useEffect(() => {
         setQuery(queryFromUrl);
@@ -94,9 +89,7 @@ export const SearchResults = () => {
 
     const results = useMemo(() => {
         const normalized = query.trim().toLowerCase();
-        if (!normalized) {
-            return { songs: [], artists: [], albums: [], events: [] };
-        }
+        if (!normalized) return sources;
 
         return {
             songs: sources.songs.filter((song) => (song.title || "").toLowerCase().includes(normalized)),
@@ -175,8 +168,7 @@ export const SearchResults = () => {
             return;
         }
         if (type === "albums") {
-            setSelectedAlbum(item);
-            setIsAlbumModalOpen(true);
+            navigate(`/album/${toSlug(item.title)}`);
             return;
         }
         if (type === "artists") {
@@ -185,23 +177,8 @@ export const SearchResults = () => {
         }
         if (type === "events") {
             if (!item?.id) return;
-            setSelectedEventId(item.id);
-            setIsEventModalOpen(true);
+            navigate(`/event/${item.id}`);
         }
-    };
-
-    const closeEventModal = () => {
-        setIsEventModalOpen(false);
-        setSelectedEventId(null);
-    };
-
-    const handleEventRsvp = (eventId, attendeeCount) => {
-        setSources((prev) => ({
-            ...prev,
-            events: prev.events.map((ev) =>
-                ev.id === eventId ? { ...ev, attendee_count: attendeeCount } : ev
-            )
-        }));
     };
 
     const handleLikeSong = async (song) => {
@@ -291,7 +268,7 @@ export const SearchResults = () => {
     };
 
     return (
-        <div className="search-results-page">
+        <div className="search-results-page search-results-page--with-player">
             <Navbar_Home />
             <main className="search-results-page__main">
                 <aside className="search-results__sidebar">
@@ -349,32 +326,16 @@ export const SearchResults = () => {
                     {renderSection("albums", "Albumes")}
                     {renderSection("events", "Eventos")}
 
-                    {!totalFound ? (
+                    {!totalFound && query.trim() ? (
                         <div className="search-results__empty">No hay resultados para esta busqueda.</div>
                     ) : null}
                 </section>
             </main>
-            <AlbumModal
-                album={selectedAlbum}
-                isOpen={isAlbumModalOpen}
-                onClose={() => {
-                    setIsAlbumModalOpen(false);
-                    setSelectedAlbum(null);
-                }}
-                onPlaySong={(song, album) => startAlbumQueue(album, song.id)}
-                onPlayAll={(album) => startAlbumQueue(album)}
-            />
             <Player
                 song={currentSong}
                 playbackContext={playbackContext}
                 queueIndex={queueIndex}
                 onSongEnd={handleSongEnded}
-            />
-            <EventPublicModal
-                eventId={selectedEventId}
-                isOpen={isEventModalOpen}
-                onClose={closeEventModal}
-                onRsvpChange={(id, count) => handleEventRsvp(id, count)}
             />
         </div>
     );

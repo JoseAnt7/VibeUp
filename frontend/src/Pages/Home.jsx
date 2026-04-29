@@ -7,9 +7,8 @@ import { SectionGrid } from "../components/SectionGrid";
 import Logo from '../assets/img/logo.png';
 import '../assets/css/Home.css';
 import { Player } from "../components/Player";
-import { AlbumModal } from "../components/AlbumModal";
-import { EventPublicModal } from "../components/EventPublicModal";
 import { API_BASE } from "../utils/apiBase";
+import { toSlug } from "../utils/slug";
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -17,11 +16,7 @@ export const Home = () => {
     const [artist, setArtist] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [events, setEvents] = useState([]);
-    const [selectedEventId, setSelectedEventId] = useState(null);
-    const [isEventModalOpen, setIsEventModalOpen] = useState(false);
     const [currentsong, setCurrentsong] = useState(null);
-    const [selectedAlbum, setSelectedAlbum] = useState(null);
-    const [isAlbumModalOpen, setIsAlbumModalOpen] = useState(false);
     const [playerQueue, setPlayerQueue] = useState([]);
     const [queueIndex, setQueueIndex] = useState(0);
     const [playbackContext, setPlaybackContext] = useState(null);
@@ -62,20 +57,16 @@ export const Home = () => {
         setCurrentsong(song);
     };
 
-    const openAlbumModal = (album) => {
-        setSelectedAlbum(album);
-        setIsAlbumModalOpen(true);
+    const openAlbumPage = (album) => {
+        const slug = toSlug(album?.title);
+        if (!slug) return;
+        navigate(`/album/${slug}`);
     };
 
     const openArtistProfile = (artistItem) => {
         const artistName = artistItem?.name;
         if (!artistName) return;
         navigate(`/artist/${encodeURIComponent(artistName)}`);
-    };
-
-    const closeAlbumModal = () => {
-        setIsAlbumModalOpen(false);
-        setSelectedAlbum(null);
     };
 
     const startAlbumQueue = (album, startSongId = null) => {
@@ -102,21 +93,9 @@ export const Home = () => {
         setCurrentsong(playerQueue[nextIndex]);
     };
 
-    const openEventModal = (ev) => {
+    const openEventPage = (ev) => {
         if (!ev?.id) return;
-        setSelectedEventId(ev.id);
-        setIsEventModalOpen(true);
-    };
-
-    const closeEventModal = () => {
-        setIsEventModalOpen(false);
-        setSelectedEventId(null);
-    };
-
-    const handleEventRsvp = (eventId, attendeeCount) => {
-        setEvents((prev) =>
-            prev.map((e) => (e.id === eventId ? { ...e, attendee_count: attendeeCount } : e))
-        );
+        navigate(`/event/${ev.id}`);
     };
 
     const handleLikeSong = async (song) => {
@@ -146,38 +125,36 @@ export const Home = () => {
                         onPlay={playSingleSong}
                         onLike={handleLikeSong}
                         showLikeButton
+                        viewAllHref="/search?q=&filters=songs"
                     />
-                    <SectionGrid title="Artistas" items={artist} onItemClick={openArtistProfile} />
-                    <SectionGrid title="Albumes" items={albums} onItemClick={openAlbumModal} />
+                    <SectionGrid
+                        title="Artistas"
+                        items={artist}
+                        onItemClick={openArtistProfile}
+                        viewAllHref="/search?q=&filters=artists"
+                    />
+                    <SectionGrid
+                        title="Albumes"
+                        items={albums}
+                        onItemClick={openAlbumPage}
+                        viewAllHref="/search?q=&filters=albums"
+                    />
                     <SectionGrid
                         type="events"
                         title="Eventos"
                         items={events}
-                        onItemClick={openEventModal}
+                        onItemClick={openEventPage}
+                        viewAllHref="/search?q=&filters=events"
                     />
                 </div>
             </main>
             <Footer />
-            <AlbumModal
-                album={selectedAlbum}
-                isOpen={isAlbumModalOpen}
-                onClose={closeAlbumModal}
-                onPlaySong={(song, album) => startAlbumQueue(album, song.id)}
-                onPlayAll={(album) => startAlbumQueue(album)}
-            />
             <Player
                 song={currentsong}
                 playbackContext={playbackContext}
                 queueIndex={queueIndex}
                 onSongEnd={handleSongEnded}
             />
-            <EventPublicModal
-                eventId={selectedEventId}
-                isOpen={isEventModalOpen}
-                onClose={closeEventModal}
-                onRsvpChange={(id, count) => handleEventRsvp(id, count)}
-            />
-            <p>Prueba</p>
         </div>
     )
 }

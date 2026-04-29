@@ -372,7 +372,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
                 <div className="player__center">
                     <div className="player__controls">
                         <button type="button" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : ""}
+                            {isPlaying ? "⏸" : "▶"}
                         </button>
                     </div>
 
@@ -442,7 +442,7 @@ export const Player = ({ song, playbackContext, queueIndex, onSongEnd }) => {
 
                     <div className="player-expanded__controls">
                         <button type="button" className="player-expanded__play-btn" onClick={togglePlay}>
-                            {isPlaying ? "⏸" : ""}
+                            {isPlaying ? "⏸" : "▶"}
                         </button>
                     </div>
 
