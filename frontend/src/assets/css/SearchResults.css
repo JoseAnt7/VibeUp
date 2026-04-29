@@ -3,15 +3,27 @@
   background: var(--color-bg);
   color: var(--color-text);
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .search-results-page__main {
+  flex: 1;
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 24px;
   padding: 22px 28px 120px;
   width: 100%;
   min-width: 0;
+}
+
+.search-results-page--with-player {
+  padding-bottom: var(--player-height);
+}
+
+.search-results-page--with-player .site-footer {
+  margin-top: auto;
+  margin-bottom: var(--player-height);
 }
 
 .search-results__sidebar {

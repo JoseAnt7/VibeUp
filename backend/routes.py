@@ -651,59 +651,71 @@ def my_analytics():
     avg_listen = [0] * days
     total_listen_seconds = 0.0
 
-    # Views (plays) per day: visitantes por IP + usuarios por cuenta
-    play_rows = db.session.execute(text("""
-        SELECT strftime('%Y-%m-%d', sp.created_at) AS day, COUNT(*) AS c
-        FROM song_plays sp
-        JOIN songs s ON s.id = sp.song_id
-        WHERE s.artist_id = :artist_id AND sp.created_at >= :start_dt
-        GROUP BY day
-    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchall()
-    for day, c in play_rows:
-        if day in idx:
-            views[idx[day]] = int(c or 0)
+    def day_to_iso(day_value):
+        if day_value is None:
+            return None
+        # MySQL suele devolver date/datetime; SQLite puede devolver str.
+        if hasattr(day_value, "isoformat"):
+            return day_value.isoformat()
+        return str(day_value)
 
-    user_play_rows = db.session.execute(text("""
-        SELECT strftime('%Y-%m-%d', usp.created_at) AS day, COUNT(*) AS c
-        FROM user_song_plays usp
-        JOIN songs s ON s.id = usp.song_id
-        WHERE s.artist_id = :artist_id AND usp.created_at >= :start_dt
-        GROUP BY day
-    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchall()
+    # Views (plays) per day: visitantes por IP + usuarios por cuenta
+    play_rows = (
+        db.session.query(func.date(SongPlay.created_at), func.count(SongPlay.id))
+        .join(Song, SongPlay.song_id == Song.id)
+        .filter(Song.artist_id == artist.id, SongPlay.created_at >= start_dt)
+        .group_by(func.date(SongPlay.created_at))
+        .all()
+    )
+    for day, c in play_rows:
+        day_key = day_to_iso(day)
+        if day_key in idx:
+            views[idx[day_key]] = int(c or 0)
+
+    user_play_rows = (
+        db.session.query(func.date(UserSongPlay.created_at), func.count(UserSongPlay.id))
+        .join(Song, UserSongPlay.song_id == Song.id)
+        .filter(Song.artist_id == artist.id, UserSongPlay.created_at >= start_dt)
+        .group_by(func.date(UserSongPlay.created_at))
+        .all()
+    )
     for day, c in user_play_rows:
-        if day in idx:
-            views[idx[day]] += int(c or 0)
+        day_key = day_to_iso(day)
+        if day_key in idx:
+            views[idx[day_key]] += int(c or 0)
 
     # Subs per day
-    sub_rows = db.session.execute(text("""
-        SELECT strftime('%Y-%m-%d', created_at) AS day, COUNT(*) AS c
-        FROM subscriptions
-        WHERE artist_id = :artist_id AND created_at >= :start_dt
-        GROUP BY day
-    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchall()
+    sub_rows = (
+        db.session.query(func.date(Subscription.created_at), func.count(Subscription.id))
+        .filter(Subscription.artist_id == artist.id, Subscription.created_at >= start_dt)
+        .group_by(func.date(Subscription.created_at))
+        .all()
+    )
     for day, c in sub_rows:
-        if day in idx:
-            subs[idx[day]] = int(c or 0)
+        day_key = day_to_iso(day)
+        if day_key in idx:
+            subs[idx[day_key]] = int(c or 0)
 
     # Avg listen seconds per day (average of listen events)
-    listen_rows = db.session.execute(text("""
-        SELECT strftime('%Y-%m-%d', created_at) AS day, AVG(listened_seconds) AS a
-        FROM song_listen_events
-        WHERE song_id IN (SELECT id FROM songs WHERE artist_id = :artist_id)
-          AND created_at >= :start_dt
-        GROUP BY day
-    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchall()
+    listen_rows = (
+        db.session.query(func.date(SongListenEvent.created_at), func.avg(SongListenEvent.listened_seconds))
+        .join(Song, SongListenEvent.song_id == Song.id)
+        .filter(Song.artist_id == artist.id, SongListenEvent.created_at >= start_dt)
+        .group_by(func.date(SongListenEvent.created_at))
+        .all()
+    )
     for day, a in listen_rows:
-        if day in idx:
-            avg_listen[idx[day]] = round(float(a or 0), 2)
+        day_key = day_to_iso(day)
+        if day_key in idx:
+            avg_listen[idx[day_key]] = round(float(a or 0), 2)
 
-    total_listen_row = db.session.execute(text("""
-        SELECT COALESCE(SUM(listened_seconds), 0)
-        FROM song_listen_events
-        WHERE song_id IN (SELECT id FROM songs WHERE artist_id = :artist_id)
-          AND created_at >= :start_dt
-    """), {"artist_id": artist.id, "start_dt": start_dt}).fetchone()
-    total_listen_seconds = float(total_listen_row[0] or 0)
+    total_listen_row = (
+        db.session.query(func.coalesce(func.sum(SongListenEvent.listened_seconds), 0))
+        .join(Song, SongListenEvent.song_id == Song.id)
+        .filter(Song.artist_id == artist.id, SongListenEvent.created_at >= start_dt)
+        .scalar()
+    )
+    total_listen_seconds = float(total_listen_row or 0)
 
     max_views = max(views) if views else 0
     total_views = int(sum(views))

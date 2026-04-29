@@ -8,6 +8,8 @@ import { Artist } from "./Pages/artista/Artist";
 import { AccountSettings } from "./Pages/AccountSettings";
 import { SearchResults } from "./Pages/SearchResults";
 import { ArtistPublic } from "./Pages/ArtistPublic";
+import { AlbumPublic } from "./Pages/AlbumPublic";
+import { EventPublic } from "./Pages/EventPublic";
 import { AvisoLegal } from "./Pages/AvisoLegal";
 import { PoliticaPrivacidad } from "./Pages/PoliticaPrivacidad";
 import { CondicionesContenidoLicenciaArtista } from "./Pages/CondicionesContenidoLicenciaArtista";
@@ -103,6 +105,8 @@ function App() {
         <Route path="/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/artist/:artistName" element={<ArtistPublic />} />
+        <Route path="/album/:albumSlug" element={<AlbumPublic />} />
+        <Route path="/event/:eventId" element={<EventPublic />} />
         <Route path="/aviso-legal" element={<AvisoLegal />} />
         <Route path="/politica-privacidad" element={<PoliticaPrivacidad />} />
         <Route
