@@ -9,7 +9,7 @@
     backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(0,0,0,0.06);
     position: relative;
-    z-index: 100;
+    z-index: 300;
 }
 
 .Navegacion {
@@ -209,7 +209,7 @@
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     overflow: hidden;
-    z-index: 1000;
+    z-index: 1200;
     animation: slideDown 0.2s ease-out;
 }
 
@@ -258,6 +258,8 @@
         align-items: center;
         padding: 10px 14px;
         gap: 10px;
+        z-index: 400;
+        isolation: isolate;
     }
 
     .Contendor_Principal_Navbar > img[alt="Logo"] {
@@ -302,5 +304,6 @@
         right: 0;
         left: auto;
         max-width: calc(100vw - 28px);
+        z-index: 1400;
     }
 }
